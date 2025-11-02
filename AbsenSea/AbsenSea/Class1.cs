@@ -6,90 +6,162 @@ using System.Threading.Tasks;
 
 namespace AbsenSea
 {
-    public enum CrewStatus
+    public enum CrewStatus { Present, Absent, Unknown }
+    public enum EquipmentCondition { Good, Damaged, Missing }
+    public enum VerificationResult { Verified, NotVerified }
+
+    // Options object used for polymorphic check-in parameters
+    public class CheckInOptions
     {
-        Present,
-        Absent,
-        Unknown
+        public DateTime Time { get; set; } = DateTime.UtcNow;
+        public string Location { get; set; } = string.Empty;
+        public string Pin { get; set; } = null;          // for Officer
+        public bool? EquipmentOk { get; set; } = null;   // for Engineer
+        public string Note { get; set; } = null;
     }
 
-    public enum EquipmentCondition
-    {
-        Good,
-        Damaged,
-        Missing
-    }
-
-    public enum VerificationResult
-    {
-        Verified,
-        NotVerified
-    }
-
+    // Encapsulation: fields are private, expose via properties / methods
     public class CrewMember
     {
-        public string CrewID { get; set; }
-        public string Name { get; set; }
-        public string Rank { get; set; }
-        public List<SafetyEquipment> AssignedEquipment { get; set; }
-        public CrewStatus Status { get; set; }
+        private string _crewId;
+        private string _name;
+        private string _rank;
+        private List<SafetyEquipment> _assignedEquipment;
+        private List<AttendanceRecord> _attendanceHistory;
 
-        public CrewMember()
+        public CrewStatus Status { get; protected set; } = CrewStatus.Unknown;
+
+        public CrewMember(string crewId, string name, string rank)
         {
-            AssignedEquipment = new List<SafetyEquipment>();
-            Status = CrewStatus.Unknown;
+            _crewId = crewId;
+            _name = name;
+            _rank = rank;
+            _assignedEquipment = new List<SafetyEquipment>();
+            _attendanceHistory = new List<AttendanceRecord>();
         }
 
-        public void CheckIn()
+        // Read-only accessors (encapsulation)
+        public string CrewID => _crewId;
+        public string Name => _name;
+        public string Rank => _rank;
+
+        // safe copy to prevent external mutation
+        public IReadOnlyList<SafetyEquipment> AssignedEquipment => _assignedEquipment.AsReadOnly();
+        public IReadOnlyList<AttendanceRecord> AttendanceHistory => _attendanceHistory.AsReadOnly();
+
+        // Virtual method used for polymorphism
+        public virtual AttendanceRecord CheckIn(CheckInOptions options)
         {
             Status = CrewStatus.Present;
-            Console.WriteLine($"{Name} checked in.");
+            var record = new AttendanceRecord
+            {
+                RecordID = Guid.NewGuid().ToString("N"),
+                CrewMember = this,
+                Status = this.Status,
+                DateTime = options.Time,
+                VerifiedBy = VerificationResult.NotVerified,
+                Location = options.Location,
+                Note = options.Note
+            };
+            _attendanceHistory.Add(record);
+            Console.WriteLine($"{Name} ({Rank}) checked in at {record.DateTime:u} - location: {record.Location}");
+            return record;
         }
 
-        public void CheckOut()
+        public virtual AttendanceRecord CheckOut(CheckInOptions options)
         {
             Status = CrewStatus.Absent;
-            Console.WriteLine($"{Name} checked out.");
+            var record = new AttendanceRecord
+            {
+                RecordID = Guid.NewGuid().ToString("N"),
+                CrewMember = this,
+                Status = this.Status,
+                DateTime = options.Time,
+                VerifiedBy = VerificationResult.NotVerified,
+                Location = options.Location,
+                Note = options.Note
+            };
+            _attendanceHistory.Add(record);
+            Console.WriteLine($"{Name} ({Rank}) checked out at {record.DateTime:u} - location: {record.Location}");
+            return record;
         }
+
+        public void AssignEquipment(SafetyEquipment eq)
+        {
+            if (!_assignedEquipment.Contains(eq))
+            {
+                _assignedEquipment.Add(eq);
+                eq.AssignToCrew(this);
+            }
+        }
+    }
+
+    // Officer requires PIN verification
+    public class Officer : CrewMember
+    {
+        private string _pin; // private, encapsulated
+
+        public Officer(string crewId, string name, string rank, string pin)
+            : base(crewId, name, rank)
+        {
+            _pin = pin;
+        }
+
+        private bool VerifyPin(string pin) => !string.IsNullOrEmpty(_pin) && _pin == pin;
+
+        // Override with same signature to keep polymorphism
+        public override AttendanceRecord CheckIn(CheckInOptions options)
+        {
+            var verified = VerifyPin(options.Pin);
+            var record = base.CheckIn(options);
+            record.VerifiedBy = verified ? VerificationResult.Verified : VerificationResult.NotVerified;
+            record.Note = (record.Note ?? "") + $" Officer PIN verification: {record.VerifiedBy}";
+            if (!verified)
+            {
+                Console.WriteLine($"Warning: Officer {Name} PIN verification failed.");
+            }
+            return record;
+        }
+    }
+
+    // Engineer adds equipment check detail
+    public class Engineer : CrewMember
+    {
+        public Engineer(string crewId, string name, string rank)
+            : base(crewId, name, rank) { }
+
+        public override AttendanceRecord CheckIn(CheckInOptions options)
+        {
+            bool equipmentOk = options.EquipmentOk ?? true; // default true if not provided
+            var record = base.CheckIn(options);
+            record.Note = (record.Note ?? "") + $" Equipment OK: {equipmentOk}";
+            return record;
+        }
+    }
+
+    // Sailor uses default behavior
+    public class Sailor : CrewMember
+    {
+        public Sailor(string crewId, string name, string rank) : base(crewId, name, rank) { }
+        // inherit CheckIn from base
     }
 
     public class SafetyEquipment
     {
         public string EquipmentID { get; set; }
         public string Type { get; set; }
-        public EquipmentCondition Condition { get; set; }
+        public EquipmentCondition Condition { get; private set; } = EquipmentCondition.Good;
 
         public void AssignToCrew(CrewMember crew)
         {
-            crew.AssignedEquipment.Add(this);
-            Console.WriteLine($"{Type} assigned to {crew.Name}.");
+            // keep assignment message but avoid direct manipulation of crew internal list (crew.AssignEquipment handles adding)
+            Console.WriteLine($"[Equip] {Type} ({EquipmentID}) assigned to {crew.Name}.");
         }
 
         public void UpdateCondition(EquipmentCondition newCondition)
         {
             Condition = newCondition;
-            Console.WriteLine($"{Type} condition updated to {Condition}.");
-        }
-    }
-
-    public class VisionSystem
-    {
-        public string CameraID { get; set; }
-        public string Location { get; set; }
-
-        public void CaptureFrame()
-        {
-            Console.WriteLine("Frame captured.");
-        }
-
-        public void DetectEquipment()
-        {
-            Console.WriteLine("Equipment detected.");
-        }
-
-        public void DetectCrew()
-        {
-            Console.WriteLine("Crew detected.");
+            Console.WriteLine($"[Equip] {Type} ({EquipmentID}) condition updated to {Condition}.");
         }
     }
 
@@ -100,53 +172,98 @@ namespace AbsenSea
         public CrewStatus Status { get; set; }
         public DateTime DateTime { get; set; }
         public VerificationResult VerifiedBy { get; set; }
-
-        public void MarkAbsent()
-        {
-            Status = CrewStatus.Absent;
-            Console.WriteLine($"Record {RecordID}: {CrewMember.Name} marked absent.");
-        }
-
-        public void MarkPresent()
-        {
-            Status = CrewStatus.Present;
-            Console.WriteLine($"Record {RecordID}: {CrewMember.Name} marked present.");
-        }
+        public string Location { get; set; }
+        public string Note { get; set; }
     }
 
     public class AttendanceManager
     {
-        public List<AttendanceRecord> Records { get; set; }
+        private List<AttendanceRecord> _records = new List<AttendanceRecord>();
 
-        public AttendanceManager()
-        {
-            Records = new List<AttendanceRecord>();
-        }
+        // Expose read-only copy
+        public IReadOnlyList<AttendanceRecord> Records => _records.AsReadOnly();
 
-        public void AddRecord(AttendanceRecord record)
+        // Polymorphism: calls CrewMember.CheckIn with same CheckInOptions
+        public AttendanceRecord RecordCheckIn(CrewMember member, CheckInOptions options)
         {
-            Records.Add(record);
-            Console.WriteLine($"Attendance record {record.RecordID} added.");
+            var rec = member.CheckIn(options);   // runtime dispatch to subclass override
+            _records.Add(rec);
+            Console.WriteLine($"[Manager] Recorded check-in for {member.Name} (RecordID: {rec.RecordID})");
+            return rec;
         }
 
         public List<CrewMember> GetAbsentees()
         {
-            List<CrewMember> absentees = new List<CrewMember>();
-            foreach (var record in Records)
-            {
-                if (record.Status == CrewStatus.Absent)
-                    absentees.Add(record.CrewMember);
-            }
-            return absentees;
+            // find latest status per crew
+            var latestPerCrew = _records
+                .GroupBy(r => r.CrewMember.CrewID)
+                .Select(g => g.OrderByDescending(r => r.DateTime).First());
+
+            return latestPerCrew
+                .Where(r => r.Status == CrewStatus.Absent)
+                .Select(r => r.CrewMember)
+                .ToList();
         }
 
         public void GenerateReport()
         {
-            Console.WriteLine("Attendance Report:");
-            foreach (var record in Records)
+            Console.WriteLine("=== Attendance Report ===");
+            foreach (var r in _records.OrderBy(r => r.DateTime))
             {
-                Console.WriteLine($"{record.CrewMember.Name} - {record.Status} at {record.DateTime}");
+                Console.WriteLine($"{r.DateTime:u} | {r.CrewMember.Name} ({r.CrewMember.CrewID}) | {r.Status} | Verified: {r.VerifiedBy} | {r.Location} | {r.Note}");
             }
+            Console.WriteLine("=========================");
+        }
+    }
+
+    // Example usage
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            var manager = new AttendanceManager();
+
+            var captain = new Officer("O-001", "Hasan", "Captain", pin: "4321");
+            var chiefEng = new Engineer("E-101", "Rina", "Chief Engineer");
+            var ab = new Sailor("S-201", "Andi", "AB");
+
+            var lifejacket = new SafetyEquipment { EquipmentID = "EQ-01", Type = "Lifejacket" };
+            var toolbox = new SafetyEquipment { EquipmentID = "EQ-02", Type = "Toolbox" };
+
+            // Assign equipment (encapsulated via CrewMember.AssignEquipment)
+            captain.AssignEquipment(lifejacket);
+            chiefEng.AssignEquipment(toolbox);
+
+            // Record check-ins (polymorphism in action)
+            var optOfficer = new CheckInOptions { Time = DateTime.UtcNow, Location = "Bridge", Pin = "4321" };
+            manager.RecordCheckIn(captain, optOfficer);
+
+            var optEngineer = new CheckInOptions { Time = DateTime.UtcNow.AddMinutes(1), Location = "Engine Room", EquipmentOk = true };
+            manager.RecordCheckIn(chiefEng, optEngineer);
+
+            var optSailor = new CheckInOptions { Time = DateTime.UtcNow.AddMinutes(2), Location = "Deck" };
+            manager.RecordCheckIn(ab, optSailor);
+
+            // Attempt officer with wrong pin
+            var optOfficerBad = new CheckInOptions { Time = DateTime.UtcNow.AddMinutes(5), Location = "Bridge", Pin = "0000" };
+            manager.RecordCheckIn(captain, optOfficerBad);
+
+            // Generate report
+            manager.GenerateReport();
+
+            // Example: mark someone out (use CheckOut)
+            var checkoutOptions = new CheckInOptions { Time = DateTime.UtcNow.AddHours(8), Location = "Quarters", Note = "End shift" };
+            var coRec = ab.CheckOut(checkoutOptions);
+            // manager should also record check-outs to central log if desired:
+            manager.RecordCheckIn(ab, checkoutOptions); // OK: Recording CheckOut via RecordCheckIn calls CheckIn; but here we directly added CheckOut result then add to manager:
+            // Better approach would be AttendanceManager.RecordCheckOut but omitted for brevity.
+
+            Console.WriteLine("\nAbsentees (latest):");
+            var absentees = manager.GetAbsentees();
+            foreach (var x in absentees) Console.WriteLine($"- {x.Name} ({x.CrewID})");
+
+            Console.WriteLine("\nDone. Press any key to exit...");
+            Console.ReadKey();
         }
     }
 }

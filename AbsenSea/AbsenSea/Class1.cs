@@ -6,6 +6,20 @@ using System.Threading.Tasks;
 
 namespace AbsenSea
 {
+    static void Main(string[] args)
+    {
+        var connString = "Host=localhost;Port=5432;Database=absensea;Username=postgres;Password=your_password";
+        var db = new DbSamples(connString);
+        var manager = new AttendanceManager(db);
+
+        var captain = new Officer("O-001", "Hasan", "Captain", pin: "4321");
+        var optOfficer = new CheckInOptions { Time = DateTime.UtcNow, Location = "Bridge", Pin = "4321" };
+
+        // This records in memory AND inserts into the DB (via AttendanceManager.RecordCheckIn)
+        manager.RecordCheckIn(captain, optOfficer);
+        manager.GenerateReport();
+    }
+    
     public enum CrewStatus { Present, Absent, Unknown }
     public enum EquipmentCondition { Good, Damaged, Missing }
     public enum VerificationResult { Verified, NotVerified }
@@ -267,3 +281,4 @@ namespace AbsenSea
         }
     }
 }
+

@@ -1,0 +1,11 @@
+Login & Register: Kapal (Akun Kapal)
+Isi Akun: Crew Member
+Crew Member: Absensi, Alat Safety (Helm + Vest)
+Page Absensi:
+Masukin Nama Crew -> Scan Alat Safety -> Masuk DB (sama kelengkapan)
+Page Statistik:
+Liat Presensi Crew + alat (Bisa percent + hari ini)
+	Fitur:
+	- Tambah Crew Member	
+	- Hapus Crew Member
+	- Update Presensi

@@ -80,14 +80,20 @@
 
     <Grid Background="#F3F4F6">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*" MinWidth="300"/>
+            <ColumnDefinition Width="1*" MinWidth="400"/>
         </Grid.ColumnDefinitions>
 
         <!-- Left Side - Brand Panel -->
-        <Border Grid.Column="0" Background="#1E3A8A">
+        <Border Grid.Column="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#1e3a8a" Offset="0"/>
+                    <GradientStop Color="#3b82f6" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <StackPanel VerticalAlignment="Center" Margin="60">
-                <TextBlock Text="⚓" FontSize="72" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                <Image Source="/Assets/logo.png" Width="100" Height="100" HorizontalAlignment="Center" Margin="0,0,0,20"/>
                 <TextBlock Text="Join AbsenSea" FontSize="42" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
                 <TextBlock Text="Register your ship today" FontSize="18" Foreground="#93C5FD" HorizontalAlignment="Center" Margin="0,10,0,0"/>
                 <StackPanel Margin="0,40,0,0">

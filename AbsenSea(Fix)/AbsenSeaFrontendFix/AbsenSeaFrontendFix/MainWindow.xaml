@@ -8,6 +8,8 @@
         Title="AbsenSea - Ship Crew Attendance System" 
         Height="700" 
         Width="1200"
+        MinHeight="600"
+        MinWidth="900"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
     <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>

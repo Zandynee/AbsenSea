@@ -1,0 +1,22 @@
+# Create .gitignore with common Visual Studio exclusions
+cat > .gitignore << 'EOF'
+# Visual Studio
+.vs/
+*.vsidx
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio cache/options
+.vscode/
+*.rsuser
+EOF

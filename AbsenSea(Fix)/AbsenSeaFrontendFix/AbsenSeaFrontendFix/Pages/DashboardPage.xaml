@@ -11,12 +11,12 @@
     <Page.Resources>
         <Style x:Key="StatCard" TargetType="Border">
             <Setter Property="Background" Value="White"/>
-            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="CornerRadius" Value="16"/>
             <Setter Property="Padding" Value="24"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
+                    <DropShadowEffect Color="#3b82f6" Opacity="0.15" BlurRadius="20" ShadowDepth="0"/>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -33,23 +33,24 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="8"
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="10"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#DBEAFE"/>
+                                <Setter Property="Foreground" Value="#2563eb"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#E5E7EB"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
 
         <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="Background" Value="#2563EB"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="20,12"/>
@@ -60,19 +61,23 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="8"
-                                Padding="{TemplateBinding Padding}">
+                        <Border x:Name="border" CornerRadius="10" Padding="{TemplateBinding Padding}">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#2563eb" Offset="0"/>
+                                    <GradientStop Color="#3b82f6" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1D4ED8"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
     </Page.Resources>
 
@@ -114,20 +119,20 @@
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20">
             <StackPanel>
                 <!-- Statistics Cards Row 1 -->
-                <Grid Margin="0,10,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <WrapPanel Margin="0,10,0,0" Orientation="Horizontal">
 
                     <!-- Total Crew Card -->
-                    <Border Grid.Column="0" Style="{StaticResource StatCard}">
+                    <Border Style="{StaticResource StatCard}" MinWidth="250" MaxWidth="350">
                         <StackPanel>
                             <Grid>
                                 <TextBlock Text="Total Crew Members" FontSize="14" Foreground="#6B7280" FontWeight="Medium"/>
-                                <Border Background="#DBEAFE" CornerRadius="8" Padding="8" HorizontalAlignment="Right">
+                                <Border CornerRadius="12" Padding="10" HorizontalAlignment="Right">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#2563eb" Offset="0"/>
+                                            <GradientStop Color="#3b82f6" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
                                     <TextBlock Text="👥" FontSize="20"/>
                                 </Border>
                             </Grid>
@@ -139,12 +144,18 @@
                     </Border>
 
                     <!-- Checked In Today Card -->
-                    <Border Grid.Column="1" Style="{StaticResource StatCard}">
+                    <Border Style="{StaticResource StatCard}" MinWidth="250" MaxWidth="350">
                         <StackPanel>
                             <Grid>
                                 <TextBlock Text="Checked In Today" FontSize="14" Foreground="#6B7280" FontWeight="Medium"/>
-                                <Border Background="#D1FAE5" CornerRadius="8" Padding="8" HorizontalAlignment="Right">
-                                    <TextBlock Text="✓" FontSize="20" Foreground="#10B981"/>
+                                <Border CornerRadius="12" Padding="10" HorizontalAlignment="Right">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#10b981" Offset="0"/>
+                                            <GradientStop Color="#34d399" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <TextBlock Text="✓" FontSize="20" Foreground="White"/>
                                 </Border>
                             </Grid>
                             <TextBlock Text="128" FontSize="36" FontWeight="Bold" Foreground="#111827" Margin="0,15,0,5"/>
@@ -155,11 +166,17 @@
                     </Border>
 
                     <!-- Compliant Card -->
-                    <Border Grid.Column="2" Style="{StaticResource StatCard}">
+                    <Border Style="{StaticResource StatCard}" MinWidth="250" MaxWidth="350">
                         <StackPanel>
                             <Grid>
                                 <TextBlock Text="Full Compliance" FontSize="14" Foreground="#6B7280" FontWeight="Medium"/>
-                                <Border Background="#FEF3C7" CornerRadius="8" Padding="8" HorizontalAlignment="Right">
+                                <Border CornerRadius="12" Padding="10" HorizontalAlignment="Right">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#1d4ed8" Offset="0"/>
+                                            <GradientStop Color="#60a5fa" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
                                     <TextBlock Text="🛡️" FontSize="20"/>
                                 </Border>
                             </Grid>
@@ -171,11 +188,17 @@
                     </Border>
 
                     <!-- Non-Compliant Card -->
-                    <Border Grid.Column="3" Style="{StaticResource StatCard}">
+                    <Border Style="{StaticResource StatCard}" MinWidth="250" MaxWidth="350">
                         <StackPanel>
                             <Grid>
                                 <TextBlock Text="Non-Compliant" FontSize="14" Foreground="#6B7280" FontWeight="Medium"/>
-                                <Border Background="#FEE2E2" CornerRadius="8" Padding="8" HorizontalAlignment="Right">
+                                <Border CornerRadius="12" Padding="10" HorizontalAlignment="Right">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#ef4444" Offset="0"/>
+                                            <GradientStop Color="#f87171" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
                                     <TextBlock Text="⚠️" FontSize="20"/>
                                 </Border>
                             </Grid>
@@ -185,13 +208,13 @@
                             </TextBlock>
                         </StackPanel>
                     </Border>
-                </Grid>
+                </WrapPanel>
 
                 <!-- Charts and Recent Activity Row -->
                 <Grid Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*" MinWidth="400"/>
+                        <ColumnDefinition Width="1*" MinWidth="300"/>
                     </Grid.ColumnDefinitions>
 
                     <!-- Attendance Trend Chart -->
@@ -220,7 +243,14 @@
 
                                 <!-- Day 1 -->
                                 <StackPanel Grid.Column="0" VerticalAlignment="Bottom" Margin="5">
-                                    <Border Background="#3B82F6" Height="120" CornerRadius="4,4,0,0" ToolTip="Monday: 120"/>
+                                    <Border Height="120" CornerRadius="8,8,0,0" ToolTip="Monday: 120">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#2563eb" Offset="0"/>
+                                                <GradientStop Color="#3b82f6" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                    </Border>
                                     <TextBlock Text="Mon" HorizontalAlignment="Center" Margin="0,8,0,0" FontSize="11" Foreground="#6B7280"/>
                                 </StackPanel>
 

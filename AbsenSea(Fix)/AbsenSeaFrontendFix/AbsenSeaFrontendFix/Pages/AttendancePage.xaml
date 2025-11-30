@@ -4,9 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AbsenSeaFrontendFix.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="1200"
-      Title="AttendancePage">
+      mc:Ignorable="d" d:DesignWidth="1200"
+      Title="AttendancePage" Height="860">
 
     <Page.Resources>
         <Style x:Key="NavButton" TargetType="Button">
@@ -120,8 +119,8 @@
         <!-- Main Content -->
         <Grid Grid.Row="1" Margin="30">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*" MinWidth="500"/>
+                <ColumnDefinition Width="1*" MinWidth="300"/>
             </Grid.ColumnDefinitions>
 
             <!-- Left Panel - Camera and Input -->
@@ -139,43 +138,56 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="CrewIdTextBox" 
+                            <ComboBox x:Name="CrewIdComboBox" 
                                      Grid.Column="0"
-                                     Style="{StaticResource ModernTextBox}"
+                                     IsEditable="True"
                                      FontSize="16"
                                      Margin="0,0,10,0"
-                                     TextChanged="CrewIdTextBox_TextChanged"/>
+                                     BorderBrush="#E0E7FF"
+                                     BorderThickness="2"
+                                     Padding="14,10"
+                                     TextBoxBase.TextChanged="CrewIdTextBox_TextChanged">
+                                <ComboBoxItem Content="CR-001 - John Smith"/>
+                                <ComboBoxItem Content="CR-002 - Sarah Johnson"/>
+                                <ComboBoxItem Content="CR-003 - Mike Davis"/>
+                                <ComboBoxItem Content="CR-004 - Emily Chen"/>
+                                <ComboBoxItem Content="CR-005 - David Brown"/>
+                                <ComboBoxItem Content="CR-006 - Lisa Wang"/>
+                                <ComboBoxItem Content="CR-007 - Robert Lee"/>
+                                <ComboBoxItem Content="CR-008 - Anna Martinez"/>
+                                <ComboBoxItem Content="CR-009 - Tom Wilson"/>
+                                <ComboBoxItem Content="CR-010 - Jessica Taylor"/>
+                            </ComboBox>
                             <Button Grid.Column="1"
                                     Content="Verify ID"
-                                    Background="#10B981"
                                     Foreground="White"
                                     BorderThickness="0"
-                                    Padding="30,10"
+                                    Padding="30,12"
                                     FontSize="14"
                                     FontWeight="SemiBold"
                                     Cursor="Hand"
                                     Click="VerifyId_Click">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}" 
-                                                CornerRadius="8"
-                                                Padding="{TemplateBinding Padding}">
+                                        <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="#10b981" Offset="0"/>
+                                                    <GradientStop Color="#34d399" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Button.Template>
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="#059669"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
                             </Button>
                         </Grid>
-                        
+
                         <!-- Crew Info Display -->
                         <Border x:Name="CrewInfoPanel" 
                                 Background="#F3F4F6" 
@@ -212,7 +224,7 @@
                     </Border.Effect>
                     <StackPanel>
                         <TextBlock Text="Step 2: Equipment Detection" FontSize="18" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
-                        
+
                         <!-- Camera Preview -->
                         <Border Background="#1F2937" 
                                 CornerRadius="8" 
@@ -230,7 +242,7 @@
                                            HorizontalAlignment="Center" 
                                            VerticalAlignment="Center"
                                            Margin="0,80,0,0"/>
-                                
+
                                 <!-- Detection Overlay -->
                                 <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20">
                                     <Border Background="#1F2937" 
@@ -266,49 +278,96 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <Button Grid.Column="0"
-                                    Content="Start Camera"
-                                    Background="#2563EB"
+                                    Content="🎥 Start Camera"
                                     Foreground="White"
                                     BorderThickness="0"
                                     Padding="0,15"
                                     FontSize="14"
                                     FontWeight="SemiBold"
                                     Cursor="Hand"
-                                    Margin="0,0,10,0"
+                                    Margin="0,0,5,0"
                                     Click="StartCamera_Click">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}" 
-                                                CornerRadius="8"
-                                                Padding="{TemplateBinding Padding}">
+                                        <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="#2563eb" Offset="0"/>
+                                                    <GradientStop Color="#3b82f6" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Button.Template>
                             </Button>
 
                             <Button Grid.Column="1"
-                                    x:Name="CaptureButton"
-                                    Content="Capture &amp; Analyze"
-                                    Background="#10B981"
+                                    Content="📸 Upload Photo"
                                     Foreground="White"
                                     BorderThickness="0"
                                     Padding="0,15"
                                     FontSize="14"
                                     FontWeight="SemiBold"
                                     Cursor="Hand"
-                                    Margin="10,0,0,0"
+                                    Margin="5,0,5,0"
+                                    Click="UploadPhoto_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="#7c3aed" Offset="0"/>
+                                                    <GradientStop Color="#a78bfa" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <Button Grid.Column="2"
+                                    x:Name="CaptureButton"
+                                    Content="✨ Capture &amp; Analyze"
+                                    Foreground="White"
+                                    BorderThickness="0"
+                                    Padding="0,15"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Cursor="Hand"
+                                    Margin="5,0,0,0"
                                     Click="CaptureAnalyze_Click">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}" 
-                                                CornerRadius="8"
-                                                Padding="{TemplateBinding Padding}">
+                                        <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="#10b981" Offset="0"/>
+                                                    <GradientStop Color="#34d399" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Button.Template>
                             </Button>
@@ -326,7 +385,7 @@
                     </Border.Effect>
                     <StackPanel>
                         <TextBlock Text="Today's Summary" FontSize="16" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
-                        
+
                         <Grid Margin="0,0,0,12">
                             <TextBlock Text="Total Check-ins" FontSize="13" Foreground="#6B7280"/>
                             <TextBlock Text="128" FontSize="18" FontWeight="Bold" Foreground="#111827" HorizontalAlignment="Right"/>
@@ -355,7 +414,7 @@
                     </Border.Effect>
                     <StackPanel>
                         <TextBlock Text="Recent Check-ins" FontSize="16" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
-                        
+
                         <!-- Check-in Item 1 -->
                         <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
                             <Grid>

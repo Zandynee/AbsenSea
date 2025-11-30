@@ -1,0 +1,343 @@
+<Page x:Class="AbsenSeaFrontendFix.Pages.AttendanceReportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AbsenSeaFrontendFix.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1200"
+      Title="AttendanceReportPage">
+
+    <Page.Resources>
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Background" Value="#F3F4F6"/>
+            <Setter Property="Foreground" Value="#374151"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E5E7EB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#2563EB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1D4ED8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="#F9FAFB">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="White" Padding="30,20">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" Opacity="0.05" BlurRadius="10" ShadowDepth="2"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Attendance Reports" FontSize="28" FontWeight="Bold" Foreground="#111827"/>
+                    <TextBlock Text="View and analyze crew attendance data" FontSize="14" Foreground="#6B7280" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Content="📊 Dashboard" Style="{StaticResource NavButton}" Click="NavigateToDashboard_Click"/>
+                    <Button Content="✓ Attendance" Style="{StaticResource NavButton}" Click="NavigateToAttendance_Click"/>
+                    <Button Content="📋 Reports" Style="{StaticResource PrimaryButton}"/>
+                    <Button Content="⚙ Settings" Style="{StaticResource NavButton}"/>
+                    <Button Content="Logout" Style="{StaticResource NavButton}" Click="Logout_Click" Margin="15,0,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Filters -->
+            <Border Grid.Row="0" Background="White" CornerRadius="12" Padding="24" Margin="0,0,0,20">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
+                </Border.Effect>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Date Range -->
+                    <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                        <TextBlock Text="Date Range" FontSize="13" FontWeight="SemiBold" Foreground="#374151" Margin="0,0,0,8"/>
+                        <DatePicker BorderBrush="#D1D5DB"
+                                    BorderThickness="1"
+                                    Padding="10,8"/>
+                    </StackPanel>
+
+                    <!-- Status Filter -->
+                    <StackPanel Grid.Column="1" Margin="0,0,15,0">
+                        <TextBlock Text="Compliance Status" FontSize="13" FontWeight="SemiBold" Foreground="#374151" Margin="0,0,0,8"/>
+                        <ComboBox SelectedIndex="0" 
+                                  BorderBrush="#D1D5DB"
+                                  BorderThickness="1"
+                                  Padding="10,8">
+                            <ComboBoxItem Content="All Status"/>
+                            <ComboBoxItem Content="Compliant"/>
+                            <ComboBoxItem Content="Non-Compliant"/>
+                            <ComboBoxItem Content="Missing Helmet"/>
+                            <ComboBoxItem Content="Missing Vest"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Department Filter -->
+                    <StackPanel Grid.Column="2" Margin="0,0,15,0">
+                        <TextBlock Text="Department" FontSize="13" FontWeight="SemiBold" Foreground="#374151" Margin="0,0,0,8"/>
+                        <ComboBox SelectedIndex="0"
+                                  BorderBrush="#D1D5DB"
+                                  BorderThickness="1"
+                                  Padding="10,8">
+                            <ComboBoxItem Content="All Departments"/>
+                            <ComboBoxItem Content="Engineering"/>
+                            <ComboBoxItem Content="Deck"/>
+                            <ComboBoxItem Content="Kitchen"/>
+                            <ComboBoxItem Content="Navigation"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Export Button -->
+                    <StackPanel Grid.Column="3" VerticalAlignment="Bottom">
+                        <Button Content="📥 Export PDF"
+                                Background="#10B981"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Padding="20,12"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Cursor="Hand"
+                                Click="ExportPdf_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" 
+                                            CornerRadius="8"
+                                            Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Reports Table -->
+            <Border Grid.Row="1" Background="White" CornerRadius="12" Padding="24">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
+                </Border.Effect>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Table Header -->
+                    <Grid Grid.Row="0" Margin="0,0,0,15">
+                        <TextBlock Text="Daily Attendance Records" FontSize="18" FontWeight="Bold" Foreground="#111827"/>
+                        <TextBlock Text="Today • November 30, 2025" FontSize="13" Foreground="#6B7280" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Data Grid -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <DataGrid x:Name="AttendanceDataGrid"
+                                  AutoGenerateColumns="False"
+                                  GridLinesVisibility="None"
+                                  HeadersVisibility="Column"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  IsReadOnly="True"
+                                  BorderThickness="0"
+                                  Background="Transparent"
+                                  RowBackground="White"
+                                  AlternatingRowBackground="#F9FAFB">
+                            
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#F3F4F6"/>
+                                    <Setter Property="Foreground" Value="#374151"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <Setter Property="FontSize" Value="13"/>
+                                    <Setter Property="Padding" Value="12,10"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Padding" Value="0,8"/>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                    <Setter Property="BorderBrush" Value="#E5E7EB"/>
+                                </Style>
+                            </DataGrid.RowStyle>
+
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Padding" Value="12,8"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="DataGridCell">
+                                                <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                                                    <ContentPresenter VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DataGrid.CellStyle>
+
+                            <DataGrid.Columns>
+                                <!-- Crew ID -->
+                                <DataGridTextColumn Header="Crew ID" Binding="{Binding CrewId}" Width="100"/>
+                                
+                                <!-- Name -->
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="200"/>
+                                
+                                <!-- Position -->
+                                <DataGridTextColumn Header="Position" Binding="{Binding Position}" Width="150"/>
+                                
+                                <!-- Check-in Time -->
+                                <DataGridTextColumn Header="Check-in Time" Binding="{Binding CheckInTime}" Width="140"/>
+                                
+                                <!-- Helmet Status -->
+                                <DataGridTemplateColumn Header="Helmet" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{Binding HelmetStatusColor}" 
+                                                    CornerRadius="4" 
+                                                    Padding="8,4"
+                                                    HorizontalAlignment="Center">
+                                                <TextBlock Text="{Binding HelmetStatus}" 
+                                                           FontSize="12" 
+                                                           FontWeight="SemiBold"
+                                                           Foreground="White"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                
+                                <!-- Vest Status -->
+                                <DataGridTemplateColumn Header="Vest" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{Binding VestStatusColor}" 
+                                                    CornerRadius="4" 
+                                                    Padding="8,4"
+                                                    HorizontalAlignment="Center">
+                                                <TextBlock Text="{Binding VestStatus}" 
+                                                           FontSize="12" 
+                                                           FontWeight="SemiBold"
+                                                           Foreground="White"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                
+                                <!-- Overall Status -->
+                                <DataGridTemplateColumn Header="Status" Width="120">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{Binding OverallStatusColor}" 
+                                                    CornerRadius="4" 
+                                                    Padding="8,4"
+                                                    HorizontalAlignment="Center">
+                                                <TextBlock Text="{Binding OverallStatus}" 
+                                                           FontSize="12" 
+                                                           FontWeight="SemiBold"
+                                                           Foreground="White"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                
+                                <!-- Actions -->
+                                <DataGridTemplateColumn Header="Actions" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="View Details" 
+                                                    Background="#F3F4F6"
+                                                    Foreground="#374151"
+                                                    BorderThickness="0"
+                                                    Padding="12,6"
+                                                    FontSize="12"
+                                                    Cursor="Hand">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border Background="{TemplateBinding Background}" 
+                                                                CornerRadius="6"
+                                                                Padding="{TemplateBinding Padding}">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

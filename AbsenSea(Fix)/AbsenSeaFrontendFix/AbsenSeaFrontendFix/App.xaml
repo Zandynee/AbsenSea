@@ -1,0 +1,25 @@
+﻿<Application x:Class="AbsenSeaFrontendFix.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AbsenSeaFrontendFix"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- Color Palette -->
+        <SolidColorBrush x:Key="PrimaryBlue" Color="#2563EB"/>
+        <SolidColorBrush x:Key="PrimaryBlueDark" Color="#1D4ED8"/>
+        <SolidColorBrush x:Key="NavyBlue" Color="#1E3A8A"/>
+        <SolidColorBrush x:Key="SuccessGreen" Color="#10B981"/>
+        <SolidColorBrush x:Key="SuccessGreenDark" Color="#059669"/>
+        <SolidColorBrush x:Key="DangerRed" Color="#EF4444"/>
+        <SolidColorBrush x:Key="Gray50" Color="#F9FAFB"/>
+        <SolidColorBrush x:Key="Gray100" Color="#F3F4F6"/>
+        <SolidColorBrush x:Key="Gray200" Color="#E5E7EB"/>
+        <SolidColorBrush x:Key="Gray300" Color="#D1D5DB"/>
+        <SolidColorBrush x:Key="Gray400" Color="#9CA3AF"/>
+        <SolidColorBrush x:Key="Gray500" Color="#6B7280"/>
+        <SolidColorBrush x:Key="Gray600" Color="#4B5563"/>
+        <SolidColorBrush x:Key="Gray700" Color="#374151"/>
+        <SolidColorBrush x:Key="Gray800" Color="#1F2937"/>
+        <SolidColorBrush x:Key="Gray900" Color="#111827"/>
+    </Application.Resources>
+</Application>

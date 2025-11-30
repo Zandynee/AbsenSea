@@ -1,33 +1,37 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\",
+  "WorkspaceRootPath": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|c:\\users\\saida\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\registerpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\pages\\registerpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|d:\\entertainment\\coding\\junopr\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\attendancepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\pages\\attendancepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|c:\\users\\saida\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\pages\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|c:\\users\\saida\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\dashboardpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\pages\\dashboardpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|c:\\users\\saida\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\attendancereportpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|d:\\entertainment\\coding\\junopr\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\attendancereportpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\pages\\attendancereportpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|c:\\users\\saida\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\attendancepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|d:\\entertainment\\coding\\junopr\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\dashboardpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\pages\\dashboardpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|d:\\entertainment\\coding\\junopr\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\pages\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|d:\\entertainment\\coding\\junopr\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\attendancepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\pages\\attendancepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|c:\\users\\saida\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|d:\\entertainment\\coding\\junopr\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|c:\\users\\saida\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|d:\\entertainment\\coding\\junopr\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\pages\\registerpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\pages\\registerpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|d:\\entertainment\\coding\\junopr\\absensea\\absensea(fix)\\absenseafrontendfix\\absenseafrontendfix\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4C99E8F3-6271-4905-B779-41E01F00DBB0}|AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj|solutionrelative:absenseafrontendfix\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -43,10 +47,23 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AttendancePage.xaml.cs",
+              "DocumentMoniker": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\AttendancePage.xaml.cs",
+              "RelativeDocumentMoniker": "AbsenSeaFrontendFix\\Pages\\AttendancePage.xaml.cs",
+              "ToolTip": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\AttendancePage.xaml.cs",
+              "RelativeToolTip": "AbsenSeaFrontendFix\\Pages\\AttendancePage.xaml.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAgwCMAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:47:15.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "RegisterPage.xaml",
-              "DocumentMoniker": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\RegisterPage.xaml",
+              "DocumentMoniker": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\RegisterPage.xaml",
               "RelativeDocumentMoniker": "AbsenSeaFrontendFix\\Pages\\RegisterPage.xaml",
-              "ToolTip": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\RegisterPage.xaml",
+              "ToolTip": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\RegisterPage.xaml",
               "RelativeToolTip": "AbsenSeaFrontendFix\\Pages\\RegisterPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-11-30T01:11:30.749Z",
@@ -54,11 +71,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "LoginPage.xaml",
-              "DocumentMoniker": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\LoginPage.xaml",
+              "DocumentMoniker": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\LoginPage.xaml",
               "RelativeDocumentMoniker": "AbsenSeaFrontendFix\\Pages\\LoginPage.xaml",
-              "ToolTip": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\LoginPage.xaml",
+              "ToolTip": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\LoginPage.xaml",
               "RelativeToolTip": "AbsenSeaFrontendFix\\Pages\\LoginPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-11-30T01:11:28.738Z",
@@ -68,9 +85,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "DashboardPage.xaml",
-              "DocumentMoniker": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\DashboardPage.xaml",
+              "DocumentMoniker": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\DashboardPage.xaml",
               "RelativeDocumentMoniker": "AbsenSeaFrontendFix\\Pages\\DashboardPage.xaml",
-              "ToolTip": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\DashboardPage.xaml",
+              "ToolTip": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\DashboardPage.xaml",
               "RelativeToolTip": "AbsenSeaFrontendFix\\Pages\\DashboardPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-11-30T01:11:26.944Z",
@@ -78,11 +95,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "AttendanceReportPage.xaml",
-              "DocumentMoniker": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\AttendanceReportPage.xaml",
+              "DocumentMoniker": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\AttendanceReportPage.xaml",
               "RelativeDocumentMoniker": "AbsenSeaFrontendFix\\Pages\\AttendanceReportPage.xaml",
-              "ToolTip": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\AttendanceReportPage.xaml",
+              "ToolTip": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\AttendanceReportPage.xaml",
               "RelativeToolTip": "AbsenSeaFrontendFix\\Pages\\AttendanceReportPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-11-30T01:11:24.979Z",
@@ -92,9 +109,9 @@
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "AttendancePage.xaml",
-              "DocumentMoniker": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\AttendancePage.xaml",
+              "DocumentMoniker": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\AttendancePage.xaml",
               "RelativeDocumentMoniker": "AbsenSeaFrontendFix\\Pages\\AttendancePage.xaml",
-              "ToolTip": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\AttendancePage.xaml",
+              "ToolTip": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\Pages\\AttendancePage.xaml",
               "RelativeToolTip": "AbsenSeaFrontendFix\\Pages\\AttendancePage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-11-30T01:11:19.615Z",
@@ -104,9 +121,9 @@
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\MainWindow.xaml",
+              "DocumentMoniker": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\MainWindow.xaml",
               "RelativeDocumentMoniker": "AbsenSeaFrontendFix\\MainWindow.xaml",
-              "ToolTip": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\MainWindow.xaml",
+              "ToolTip": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\MainWindow.xaml",
               "RelativeToolTip": "AbsenSeaFrontendFix\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-11-30T00:56:09.91Z",
@@ -114,19 +131,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "AbsenSeaFrontendFix\\MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\MainWindow.xaml.cs",
               "RelativeToolTip": "AbsenSeaFrontendFix\\MainWindow.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T00:56:06.875Z"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+              "WhenOpened": "2025-11-30T00:56:06.875Z",
+              "EditorCaption": ""
             }
           ]
         }

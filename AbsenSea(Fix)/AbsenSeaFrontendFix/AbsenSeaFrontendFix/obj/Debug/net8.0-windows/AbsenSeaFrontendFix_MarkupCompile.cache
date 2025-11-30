@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\saida\AbsenSea\AbsenSea(Fix)\AbsenSeaFrontendFix\AbsenSeaFrontendFix\obj\Debug\net8.0-windows\
+D:\Entertainment\Coding\junopr\AbsenSea\AbsenSea(Fix)\AbsenSeaFrontendFix\AbsenSeaFrontendFix\obj\Debug\net8.0-windows\
 AbsenSeaFrontendFix
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-C:\Users\saida\AbsenSea\AbsenSea(Fix)\AbsenSeaFrontendFix\AbsenSeaFrontendFix\App.xaml
+D:\Entertainment\Coding\junopr\AbsenSea\AbsenSea(Fix)\AbsenSeaFrontendFix\AbsenSeaFrontendFix\App.xaml
 6-326649663
 
 9582736050
-198-1431420039
+198-211836927
 MainWindow.xaml;Pages\AttendancePage.xaml;Pages\AttendanceReportPage.xaml;Pages\DashboardPage.xaml;Pages\LoginPage.xaml;Pages\RegisterPage.xaml;
 
 False

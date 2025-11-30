@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AbsenSeaFrontendFix")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1baa087513c72fd0f3acb88a8cbb8fdaf6a14349")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5319ab3ad8e641d2268e94b9e7cf1a6e8924619b")]
 [assembly: System.Reflection.AssemblyProductAttribute("AbsenSeaFrontendFix")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AbsenSeaFrontendFix")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

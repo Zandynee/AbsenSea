@@ -2,55 +2,73 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using static AbsenSeaFrontendFix.Pages.Backend;
-using Supabase;
-using Supabase.Interfaces;
 using AbsenSeaFrontendFix.Pages.Database;
-using Supabase.Postgrest.Attributes;
-using Supabase.Postgrest.Models;
 using System.Diagnostics;
+using System.Linq;
 
 namespace AbsenSeaFrontendFix.Pages
 {
     public partial class AttendanceReportPage : Page
     {
-
-
         private Backend _backend;
+
         public AttendanceReportPage()
         {
             InitializeComponent();
-            LoadSampleData();
+            this.Loaded += AttendanceReportPage_Loaded;
         }
 
-        private async void LoadSampleData()
+        private async void AttendanceReportPage_Loaded(object sender, RoutedEventArgs e)
         {
+            await LoadAttendanceData();
+        }
 
-            // Sample data for demonstration
-            // your supabase service
+        private async System.Threading.Tasks.Task LoadAttendanceData()
+        {
             try
             {
+                // Initialize backend if not already done
                 if (_backend == null)
                 {
                     _backend = await Backend.CreateAsync();
                 }
 
-                var result = await _backend.SupabaseClient
+                // Fetch crew checks - we'll need to manually join crew member data
+                var checksResult = await _backend.SupabaseClient
                     .From<CrewCheck>()
-          
+                    .Select("*")
+                    .Order("CAPTURE_AT", Supabase.Postgrest.Constants.Ordering.Descending)
                     .Get();
 
+                // Fetch all crew members for lookup
+                var crewResult = await _backend.SupabaseClient
+                    .From<CrewMember>()
+                    .Select("*")
+                    .Get();
+
+                // Create a dictionary for quick lookup
+                var crewLookup = crewResult.Models.ToDictionary(c => c.CREW_ID, c => c);
 
                 var list = new ObservableCollection<AttendanceRecord>();
 
-                foreach (var item in result.Models)
+                foreach (var item in checksResult.Models)
                 {
+                    // Skip if no crew ID
+                    if (item.CREW_ID == null) continue;
+
+                    // Get crew member from lookup
+                    CrewMember crewMember = null;
+                    if (crewLookup.ContainsKey(item.CREW_ID.Value))
+                    {
+                        crewMember = crewLookup[item.CREW_ID.Value];
+                    }
+
                     list.Add(new AttendanceRecord
                     {
-                        CrewId = item.CREW_ID.ToString(),
-                        Name = item.CREW_MEMBER?.CREW_NAME,
-                        Position = "Unknown", // unless you add a column for this
-                        CheckInTime = item.CAPTURE_AT.ToShortTimeString(),
+                        CrewId = item.CREW_ID?.ToString() ?? "N/A",
+                        Name = crewMember?.CREW_NAME ?? "Unknown",
+                        Position = "Crew Member", // Default since position not in DB
+                        CheckInTime = item.CAPTURE_AT.ToLocalTime().ToString("HH:mm:ss"),
                         HelmetStatus = item.HELMET == true ? "✓" : "✗",
                         VestStatus = item.VEST == true ? "✓" : "✗",
                         HelmetStatusColor = item.HELMET == true ? "#10B981" : "#EF4444",
@@ -61,11 +79,15 @@ namespace AbsenSeaFrontendFix.Pages
                 }
 
                 AttendanceDataGrid.ItemsSource = list;
+
+                Debug.WriteLine($"Loaded {list.Count} attendance records");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error: {ex.Message}");
+                Debug.WriteLine($"Error loading attendance data: {ex.Message}");
                 Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+                MessageBox.Show($"Failed to load attendance data: {ex.Message}",
+                    "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -90,7 +112,8 @@ namespace AbsenSeaFrontendFix.Pages
         private void ExportPdf_Click(object sender, RoutedEventArgs e)
         {
             // TODO: Implement PDF export functionality
-            MessageBox.Show("Report exported successfully!", "Export Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Report exported successfully!", "Export Complete",
+                MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 

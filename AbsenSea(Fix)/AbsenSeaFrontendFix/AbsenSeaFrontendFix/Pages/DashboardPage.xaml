@@ -98,13 +98,11 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Title and Ship Info -->
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="Dashboard" FontSize="28" FontWeight="Bold" Foreground="#111827"/>
-                    <TextBlock Text="Ship: MV Ocean Voyager • ID: SHP-001" FontSize="14" Foreground="#6B7280" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="ShipInfoText" Text="Ship: MV Ocean Voyager • ID: SHP-001" FontSize="14" Foreground="#6B7280" Margin="0,5,0,0"/>
                 </StackPanel>
 
-                <!-- Navigation Buttons -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Content="📊 Dashboard" Style="{StaticResource PrimaryButton}"/>
                     <Button Content="✓ Attendance" Style="{StaticResource NavButton}" Click="NavigateToAttendance_Click"/>
@@ -118,7 +116,7 @@
         <!-- Main Content -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20">
             <StackPanel>
-                <!-- Statistics Cards Row 1 -->
+                <!-- Statistics Cards -->
                 <WrapPanel Margin="0,10,0,0" Orientation="Horizontal">
 
                     <!-- Total Crew Card -->
@@ -136,8 +134,8 @@
                                     <TextBlock Text="👥" FontSize="20"/>
                                 </Border>
                             </Grid>
-                            <TextBlock Text="142" FontSize="36" FontWeight="Bold" Foreground="#111827" Margin="0,15,0,5"/>
-                            <TextBlock Foreground="#10B981" FontSize="12" FontWeight="SemiBold">
+                            <TextBlock x:Name="TotalCrewText" Text="142" FontSize="36" FontWeight="Bold" Foreground="#111827" Margin="0,15,0,5"/>
+                            <TextBlock x:Name="TotalCrewSubtext" Foreground="#10B981" FontSize="12" FontWeight="SemiBold">
                                 <Run Text="↑ 12% "/><Run Text="from last month" Foreground="#6B7280"/>
                             </TextBlock>
                         </StackPanel>
@@ -158,8 +156,8 @@
                                     <TextBlock Text="✓" FontSize="20" Foreground="White"/>
                                 </Border>
                             </Grid>
-                            <TextBlock Text="128" FontSize="36" FontWeight="Bold" Foreground="#111827" Margin="0,15,0,5"/>
-                            <TextBlock Foreground="#6B7280" FontSize="12" FontWeight="SemiBold">
+                            <TextBlock x:Name="CheckedInText" Text="128" FontSize="36" FontWeight="Bold" Foreground="#111827" Margin="0,15,0,5"/>
+                            <TextBlock x:Name="AttendanceRateText" Foreground="#6B7280" FontSize="12" FontWeight="SemiBold">
                                 <Run Text="90.1% "/><Run Text="attendance rate"/>
                             </TextBlock>
                         </StackPanel>
@@ -180,8 +178,8 @@
                                     <TextBlock Text="🛡️" FontSize="20"/>
                                 </Border>
                             </Grid>
-                            <TextBlock Text="115" FontSize="36" FontWeight="Bold" Foreground="#111827" Margin="0,15,0,5"/>
-                            <TextBlock Foreground="#10B981" FontSize="12" FontWeight="SemiBold">
+                            <TextBlock x:Name="CompliantText" Text="115" FontSize="36" FontWeight="Bold" Foreground="#111827" Margin="0,15,0,5"/>
+                            <TextBlock x:Name="ComplianceRateText" Foreground="#10B981" FontSize="12" FontWeight="SemiBold">
                                 <Run Text="89.8% "/><Run Text="with full equipment" Foreground="#6B7280"/>
                             </TextBlock>
                         </StackPanel>
@@ -202,164 +200,35 @@
                                     <TextBlock Text="⚠️" FontSize="20"/>
                                 </Border>
                             </Grid>
-                            <TextBlock Text="13" FontSize="36" FontWeight="Bold" Foreground="#EF4444" Margin="0,15,0,5"/>
-                            <TextBlock Foreground="#EF4444" FontSize="12" FontWeight="SemiBold">
+                            <TextBlock x:Name="NonCompliantText" Text="13" FontSize="36" FontWeight="Bold" Foreground="#EF4444" Margin="0,15,0,5"/>
+                            <TextBlock x:Name="NonComplianceRateText" Foreground="#EF4444" FontSize="12" FontWeight="SemiBold">
                                 <Run Text="10.2% "/><Run Text="missing equipment" Foreground="#6B7280"/>
                             </TextBlock>
                         </StackPanel>
                     </Border>
                 </WrapPanel>
 
-                <!-- Charts and Recent Activity Row -->
+                <!-- Charts and Equipment Status -->
                 <Grid Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*" MinWidth="400"/>
                         <ColumnDefinition Width="1*" MinWidth="300"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Attendance Trend Chart -->
+                    <!-- Attendance Trend (keeping static for now) -->
                     <Border Grid.Column="0" Style="{StaticResource StatCard}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,20">
-                                <TextBlock Text="Attendance Trend (Last 7 Days)" FontSize="18" FontWeight="Bold" Foreground="#111827"/>
-                                <ComboBox HorizontalAlignment="Right" Width="120" SelectedIndex="0">
-                                    <ComboBoxItem Content="Last 7 Days"/>
-                                    <ComboBoxItem Content="Last 30 Days"/>
-                                    <ComboBoxItem Content="Last 3 Months"/>
-                                </ComboBox>
-                            </Grid>
-                            
-                            <!-- Simple Bar Chart Visualization -->
-                            <Grid Height="200">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <!-- Day 1 -->
-                                <StackPanel Grid.Column="0" VerticalAlignment="Bottom" Margin="5">
-                                    <Border Height="120" CornerRadius="8,8,0,0" ToolTip="Monday: 120">
-                                        <Border.Background>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                <GradientStop Color="#2563eb" Offset="0"/>
-                                                <GradientStop Color="#3b82f6" Offset="1"/>
-                                            </LinearGradientBrush>
-                                        </Border.Background>
-                                    </Border>
-                                    <TextBlock Text="Mon" HorizontalAlignment="Center" Margin="0,8,0,0" FontSize="11" Foreground="#6B7280"/>
-                                </StackPanel>
-
-                                <!-- Day 2 -->
-                                <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Margin="5">
-                                    <Border Background="#3B82F6" Height="135" CornerRadius="4,4,0,0" ToolTip="Tuesday: 135"/>
-                                    <TextBlock Text="Tue" HorizontalAlignment="Center" Margin="0,8,0,0" FontSize="11" Foreground="#6B7280"/>
-                                </StackPanel>
-
-                                <!-- Day 3 -->
-                                <StackPanel Grid.Column="2" VerticalAlignment="Bottom" Margin="5">
-                                    <Border Background="#3B82F6" Height="128" CornerRadius="4,4,0,0" ToolTip="Wednesday: 128"/>
-                                    <TextBlock Text="Wed" HorizontalAlignment="Center" Margin="0,8,0,0" FontSize="11" Foreground="#6B7280"/>
-                                </StackPanel>
-
-                                <!-- Day 4 -->
-                                <StackPanel Grid.Column="3" VerticalAlignment="Bottom" Margin="5">
-                                    <Border Background="#3B82F6" Height="140" CornerRadius="4,4,0,0" ToolTip="Thursday: 140"/>
-                                    <TextBlock Text="Thu" HorizontalAlignment="Center" Margin="0,8,0,0" FontSize="11" Foreground="#6B7280"/>
-                                </StackPanel>
-
-                                <!-- Day 5 -->
-                                <StackPanel Grid.Column="4" VerticalAlignment="Bottom" Margin="5">
-                                    <Border Background="#3B82F6" Height="132" CornerRadius="4,4,0,0" ToolTip="Friday: 132"/>
-                                    <TextBlock Text="Fri" HorizontalAlignment="Center" Margin="0,8,0,0" FontSize="11" Foreground="#6B7280"/>
-                                </StackPanel>
-
-                                <!-- Day 6 -->
-                                <StackPanel Grid.Column="5" VerticalAlignment="Bottom" Margin="5">
-                                    <Border Background="#3B82F6" Height="125" CornerRadius="4,4,0,0" ToolTip="Saturday: 125"/>
-                                    <TextBlock Text="Sat" HorizontalAlignment="Center" Margin="0,8,0,0" FontSize="11" Foreground="#6B7280"/>
-                                </StackPanel>
-
-                                <!-- Day 7 (Today) -->
-                                <StackPanel Grid.Column="6" VerticalAlignment="Bottom" Margin="5">
-                                    <Border Background="#10B981" Height="128" CornerRadius="4,4,0,0" ToolTip="Sunday (Today): 128"/>
-                                    <TextBlock Text="Sun" HorizontalAlignment="Center" Margin="0,8,0,0" FontSize="11" Foreground="#10B981" FontWeight="Bold"/>
-                                </StackPanel>
-                            </Grid>
+                            <TextBlock Text="Attendance Trend (Last 7 Days)" FontSize="18" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,20"/>
+                            <TextBlock Text="📊 Chart visualization coming soon..." FontSize="14" Foreground="#6B7280" TextAlignment="Center" Margin="0,40"/>
                         </StackPanel>
                     </Border>
 
-                    <!-- Equipment Compliance -->
+                    <!-- Equipment Status -->
                     <Border Grid.Column="1" Style="{StaticResource StatCard}">
                         <StackPanel>
                             <TextBlock Text="Equipment Status" FontSize="18" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,20"/>
-                            
-                            <!-- Safety Helmet -->
-                            <Grid Margin="0,0,0,20">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                
-                                <Grid Grid.Row="0" Margin="0,0,0,8">
-                                    <TextBlock Text="🪖 Safety Helmet" FontSize="13" Foreground="#374151" FontWeight="SemiBold"/>
-                                    <TextBlock Text="95%" FontSize="13" Foreground="#10B981" FontWeight="Bold" HorizontalAlignment="Right"/>
-                                </Grid>
-                                
-                                <Border Grid.Row="1" Background="#E5E7EB" Height="8" CornerRadius="4">
-                                    <Border Background="#10B981" Width="380" HorizontalAlignment="Left" CornerRadius="4"/>
-                                </Border>
-                            </Grid>
 
-                            <!-- Safety Vest -->
-                            <Grid Margin="0,0,0,20">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                
-                                <Grid Grid.Row="0" Margin="0,0,0,8">
-                                    <TextBlock Text="🦺 Safety Vest" FontSize="13" Foreground="#374151" FontWeight="SemiBold"/>
-                                    <TextBlock Text="92%" FontSize="13" Foreground="#10B981" FontWeight="Bold" HorizontalAlignment="Right"/>
-                                </Grid>
-                                
-                                <Border Grid.Row="1" Background="#E5E7EB" Height="8" CornerRadius="4">
-                                    <Border Background="#10B981" Width="368" HorizontalAlignment="Left" CornerRadius="4"/>
-                                </Border>
-                            </Grid>
-
-                            <!-- Both Equipment -->
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                
-                                <Grid Grid.Row="0" Margin="0,0,0,8">
-                                    <TextBlock Text="✓ Both Equipment" FontSize="13" Foreground="#374151" FontWeight="SemiBold"/>
-                                    <TextBlock Text="90%" FontSize="13" Foreground="#10B981" FontWeight="Bold" HorizontalAlignment="Right"/>
-                                </Grid>
-                                
-                                <Border Grid.Row="1" Background="#E5E7EB" Height="8" CornerRadius="4">
-                                    <Border Background="#10B981" Width="360" HorizontalAlignment="Left" CornerRadius="4"/>
-                                </Border>
-                            </Grid>
-
-                            <!-- Alert -->
-                            <Border Background="#FEF3C7" CornerRadius="8" Padding="12" Margin="0,25,0,0">
-                                <StackPanel>
-                                    <TextBlock Text="⚠️ Attention Required" FontSize="12" FontWeight="Bold" Foreground="#92400E"/>
-                                    <TextBlock Text="13 crew members need to complete their safety equipment." 
-                                               FontSize="11" 
-                                               Foreground="#78350F" 
-                                               TextWrapping="Wrap"
-                                               Margin="0,5,0,0"/>
-                                </StackPanel>
-                            </Border>
+                            <TextBlock x:Name="EquipmentStatusText" Text="Loading..." FontSize="14" Foreground="#6B7280" TextWrapping="Wrap"/>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -367,106 +236,9 @@
                 <!-- Recent Activity -->
                 <Border Style="{StaticResource StatCard}" Margin="10,10,10,20">
                     <StackPanel>
-                        <Grid Margin="0,0,0,20">
-                            <TextBlock Text="Recent Activity" FontSize="18" FontWeight="Bold" Foreground="#111827"/>
-                            <TextBlock Text="View All →" 
-                                       FontSize="13" 
-                                       Foreground="#2563EB" 
-                                       FontWeight="SemiBold"
-                                       HorizontalAlignment="Right"
-                                       VerticalAlignment="Center"
-                                       Cursor="Hand"/>
-                        </Grid>
-
-                        <!-- Activity List -->
-                        <StackPanel>
-                            <!-- Activity Item 1 -->
-                            <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,12">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="0" Background="#D1FAE5" Width="40" Height="40" CornerRadius="20" Margin="0,0,15,0">
-                                        <TextBlock Text="✓" FontSize="18" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Text="John Smith checked in" FontSize="14" FontWeight="SemiBold" Foreground="#111827"/>
-                                        <TextBlock Text="Full compliance • Helmet &amp; Vest detected" FontSize="12" Foreground="#10B981" Margin="0,2,0,0"/>
-                                    </StackPanel>
-
-                                    <TextBlock Grid.Column="2" Text="2 min ago" FontSize="12" Foreground="#9CA3AF" VerticalAlignment="Center"/>
-                                </Grid>
-                            </Border>
-
-                            <!-- Activity Item 2 -->
-                            <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,12">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="0" Background="#FEE2E2" Width="40" Height="40" CornerRadius="20" Margin="0,0,15,0">
-                                        <TextBlock Text="⚠" FontSize="18" Foreground="#EF4444" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Sarah Johnson - Equipment Missing" FontSize="14" FontWeight="SemiBold" Foreground="#111827"/>
-                                        <TextBlock Text="Safety vest not detected" FontSize="12" Foreground="#EF4444" Margin="0,2,0,0"/>
-                                    </StackPanel>
-
-                                    <TextBlock Grid.Column="2" Text="8 min ago" FontSize="12" Foreground="#9CA3AF" VerticalAlignment="Center"/>
-                                </Grid>
-                            </Border>
-
-                            <!-- Activity Item 3 -->
-                            <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,12">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="0" Background="#D1FAE5" Width="40" Height="40" CornerRadius="20" Margin="0,0,15,0">
-                                        <TextBlock Text="✓" FontSize="18" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Mike Davis checked in" FontSize="14" FontWeight="SemiBold" Foreground="#111827"/>
-                                        <TextBlock Text="Full compliance • Helmet &amp; Vest detected" FontSize="12" Foreground="#10B981" Margin="0,2,0,0"/>
-                                    </StackPanel>
-
-                                    <TextBlock Grid.Column="2" Text="15 min ago" FontSize="12" Foreground="#9CA3AF" VerticalAlignment="Center"/>
-                                </Grid>
-                            </Border>
-
-                            <!-- Activity Item 4 -->
-                            <Border Padding="0,12,0,0">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="0" Background="#D1FAE5" Width="40" Height="40" CornerRadius="20" Margin="0,0,15,0">
-                                        <TextBlock Text="✓" FontSize="18" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Emily Chen checked in" FontSize="14" FontWeight="SemiBold" Foreground="#111827"/>
-                                        <TextBlock Text="Full compliance • Helmet &amp; Vest detected" FontSize="12" Foreground="#10B981" Margin="0,2,0,0"/>
-                                    </StackPanel>
-
-                                    <TextBlock Grid.Column="2" Text="23 min ago" FontSize="12" Foreground="#9CA3AF" VerticalAlignment="Center"/>
-                                </Grid>
-                            </Border>
+                        <TextBlock Text="Recent Activity" FontSize="18" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,20"/>
+                        <StackPanel x:Name="RecentActivityPanel">
+                            <TextBlock Text="Loading recent activity..." FontSize="14" Foreground="#6B7280"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>

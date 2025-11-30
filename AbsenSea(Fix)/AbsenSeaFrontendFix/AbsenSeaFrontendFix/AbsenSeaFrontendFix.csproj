@@ -9,10 +9,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\**\*" />
+    <None Remove="Resources\best.onnx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\best.onnx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetEnv" Version="3.1.1" />
     <PackageReference Include="OpenCvSharp4" Version="4.11.0.20250507" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.11.0.20250507" />
+    <PackageReference Include="Supabase" Version="1.1.1" />
     <PackageReference Include="YoloDotNet" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update=".env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

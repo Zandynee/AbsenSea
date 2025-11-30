@@ -116,402 +116,399 @@
             </Grid>
         </Border>
 
-        <!-- Main Content -->
-        <Grid Grid.Row="1" Margin="30">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" MinWidth="500"/>
-                <ColumnDefinition Width="1*" MinWidth="300"/>
-            </Grid.ColumnDefinitions>
+        <!-- Main Content with ScrollViewer -->
+        <ScrollViewer Grid.Row="1" 
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      PanningMode="VerticalOnly">
+            <Grid Margin="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" MinWidth="500"/>
+                    <ColumnDefinition Width="1*" MinWidth="300"/>
+                </Grid.ColumnDefinitions>
 
-            <!-- Left Panel - Camera and Input -->
-            <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                <!-- Crew ID Input -->
-                <Border Background="White" CornerRadius="12" Padding="24" Margin="0,0,0,20">
-                    <Border.Effect>
-                        <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
-                    </Border.Effect>
-                    <StackPanel>
-                        <TextBlock Text="Step 1: Enter Crew ID" FontSize="18" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
-                        <TextBlock Text="Crew ID Number" FontSize="13" FontWeight="SemiBold" Foreground="#374151" Margin="0,0,0,8"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <ComboBox x:Name="CrewIdComboBox" 
-                                     Grid.Column="0"
-                                     IsEditable="True"
-                                     FontSize="16"
-                                     Margin="0,0,10,0"
-                                     BorderBrush="#E0E7FF"
-                                     BorderThickness="2"
-                                     Padding="14,10"
-                                     TextBoxBase.TextChanged="CrewIdTextBox_TextChanged">
-                                <ComboBoxItem Content="CR-001 - John Smith"/>
-                                <ComboBoxItem Content="CR-002 - Sarah Johnson"/>
-                                <ComboBoxItem Content="CR-003 - Mike Davis"/>
-                                <ComboBoxItem Content="CR-004 - Emily Chen"/>
-                                <ComboBoxItem Content="CR-005 - David Brown"/>
-                                <ComboBoxItem Content="CR-006 - Lisa Wang"/>
-                                <ComboBoxItem Content="CR-007 - Robert Lee"/>
-                                <ComboBoxItem Content="CR-008 - Anna Martinez"/>
-                                <ComboBoxItem Content="CR-009 - Tom Wilson"/>
-                                <ComboBoxItem Content="CR-010 - Jessica Taylor"/>
-                            </ComboBox>
-                            <Button Grid.Column="1"
-                                    Content="Verify ID"
-                                    Foreground="White"
-                                    BorderThickness="0"
-                                    Padding="30,12"
-                                    FontSize="14"
-                                    FontWeight="SemiBold"
-                                    Cursor="Hand"
-                                    Click="VerifyId_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <GradientStop Color="#10b981" Offset="0"/>
-                                                    <GradientStop Color="#34d399" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                        </Grid>
-
-                        <!-- Crew Info Display -->
-                        <Border x:Name="CrewInfoPanel" 
-                                Background="#F3F4F6" 
-                                CornerRadius="8" 
-                                Padding="15" 
-                                Margin="0,15,0,0"
-                                Visibility="Collapsed">
+                <!-- Left Panel - Camera and Input -->
+                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                    <!-- Crew ID Input -->
+                    <Border Background="White" CornerRadius="12" Padding="24" Margin="0,0,0,20">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
+                        </Border.Effect>
+                        <StackPanel>
+                            <TextBlock Text="Step 1: Enter Crew ID" FontSize="18" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
+                            <TextBlock Text="Crew ID Number" FontSize="13" FontWeight="SemiBold" Foreground="#374151" Margin="0,0,0,8"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" 
-                                        Background="#2563EB" 
-                                        Width="50" 
-                                        Height="50" 
-                                        CornerRadius="25"
-                                        Margin="0,0,15,0">
-                                    <TextBlock Text="👤" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock x:Name="CrewNameText" Text="John Smith" FontSize="16" FontWeight="Bold" Foreground="#111827"/>
-                                    <TextBlock x:Name="CrewPositionText" Text="Engineer • Deck A" FontSize="12" Foreground="#6B7280" Margin="0,2,0,0"/>
-                                </StackPanel>
+                                <ComboBox x:Name="CrewIdComboBox" 
+                                         Grid.Column="0"
+                                         IsEditable="True"
+                                         FontSize="16"
+                                         Margin="0,0,10,0"
+                                         BorderBrush="#E0E7FF"
+                                         BorderThickness="2"
+                                         Padding="14,10"
+                                         TextBoxBase.TextChanged="CrewIdTextBox_TextChanged">
+                                    <ComboBoxItem Content="CR-001 - John Smith"/>
+                                    <ComboBoxItem Content="CR-002 - Sarah Johnson"/>
+                                    <ComboBoxItem Content="CR-003 - Mike Davis"/>
+                                    <ComboBoxItem Content="CR-004 - Emily Chen"/>
+                                    <ComboBoxItem Content="CR-005 - David Brown"/>
+                                    <ComboBoxItem Content="CR-006 - Lisa Wang"/>
+                                    <ComboBoxItem Content="CR-007 - Robert Lee"/>
+                                    <ComboBoxItem Content="CR-008 - Anna Martinez"/>
+                                    <ComboBoxItem Content="CR-009 - Tom Wilson"/>
+                                    <ComboBoxItem Content="CR-010 - Jessica Taylor"/>
+                                </ComboBox>
+                                <Button Grid.Column="1"
+                                        Content="Verify ID"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Padding="30,12"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Cursor="Hand"
+                                        Click="VerifyId_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Color="#10b981" Offset="0"/>
+                                                        <GradientStop Color="#34d399" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
                             </Grid>
-                        </Border>
-                    </StackPanel>
-                </Border>
 
-                <!-- Camera Feed -->
-                <Border Background="White" CornerRadius="12" Padding="24">
-                    <Border.Effect>
-                        <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
-                    </Border.Effect>
-                    <StackPanel>
-                        <TextBlock Text="Step 2: Equipment Detection" FontSize="18" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
+                            <!-- Crew Info Display -->
+                            <Border x:Name="CrewInfoPanel" 
+                                    Background="#F3F4F6" 
+                                    CornerRadius="8" 
+                                    Padding="15" 
+                                    Margin="0,15,0,0"
+                                    Visibility="Collapsed">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" 
+                                            Background="#2563EB" 
+                                            Width="50" 
+                                            Height="50" 
+                                            CornerRadius="25"
+                                            Margin="0,0,15,0">
+                                        <TextBlock Text="👤" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock x:Name="CrewNameText" Text="John Smith" FontSize="16" FontWeight="Bold" Foreground="#111827"/>
+                                        <TextBlock x:Name="CrewPositionText" Text="Engineer • Deck A" FontSize="12" Foreground="#6B7280" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Border>
 
-                        <!-- Camera Preview -->
-                        <Border Background="#1F2937" 
-                                CornerRadius="8" 
-                                Height="380"
-                                BorderBrush="#374151"
-                                BorderThickness="2">
-                            <Grid>
-                                <!-- Placeholder for camera feed -->
-                                <Viewbox>
-                                    <TextBlock Text="📹" FontSize="80" Foreground="#4B5563" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Viewbox>
-                                <TextBlock Text="Camera Feed" 
-                                           FontSize="20" 
-                                           Foreground="#9CA3AF" 
-                                           HorizontalAlignment="Center" 
-                                           VerticalAlignment="Center"
-                                           Margin="0,80,0,0"/>
+                    <!-- Camera Feed -->
+                    <Border Background="White" CornerRadius="12" Padding="24">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
+                        </Border.Effect>
+                        <StackPanel>
+                            <TextBlock Text="Step 2: Equipment Detection" FontSize="18" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
 
-                                <!-- Detection Overlay -->
-                                <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20">
-                                    <Border Background="#1F2937" 
+                            <!-- Camera Preview -->
+                            <Border Background="#1F2937" 
+                                    CornerRadius="8" 
+                                    Height="380"
+                                    BorderBrush="#374151"
+                                    BorderThickness="2">
+                                <Grid>
+                                    <!-- Placeholder for camera feed -->
+                                    <Viewbox/>
+
+                                    <!-- Detection Overlay -->
+                                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20">
+                                        <Border Background="#1F2937" 
+                                                CornerRadius="6" 
+                                                Padding="12,8"
+                                                Opacity="0.9">
+                                            <StackPanel>
+                                                <TextBlock Text="🎥 Camera Active" FontSize="12" Foreground="#10B981" FontWeight="SemiBold"/>
+                                                <TextBlock Text="AI Detection: Ready" FontSize="11" Foreground="#9CA3AF" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <!-- Status Indicator -->
+                                    <Border x:Name="DetectionStatus"
+                                            Background="#10B981" 
                                             CornerRadius="6" 
-                                            Padding="12,8"
-                                            Opacity="0.9">
+                                            Padding="15,10"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right"
+                                            Margin="20"
+                                            Visibility="Collapsed">
                                         <StackPanel>
-                                            <TextBlock Text="🎥 Camera Active" FontSize="12" Foreground="#10B981" FontWeight="SemiBold"/>
-                                            <TextBlock Text="AI Detection: Ready" FontSize="11" Foreground="#9CA3AF" Margin="0,4,0,0"/>
+                                            <TextBlock x:Name="DetectionStatusText" Text="✓ Equipment Detected" FontSize="13" Foreground="White" FontWeight="Bold"/>
+                                            <TextBlock x:Name="DetectionDetailsText" Text="Helmet ✓ • Vest ✓" FontSize="11" Foreground="White" Margin="0,4,0,0"/>
                                         </StackPanel>
                                     </Border>
-                                </StackPanel>
+                                </Grid>
+                            </Border>
 
-                                <!-- Status Indicator -->
-                                <Border x:Name="DetectionStatus"
-                                        Background="#10B981" 
-                                        CornerRadius="6" 
-                                        Padding="15,10"
-                                        VerticalAlignment="Top"
-                                        HorizontalAlignment="Right"
-                                        Margin="20"
-                                        Visibility="Collapsed">
-                                    <StackPanel>
-                                        <TextBlock x:Name="DetectionStatusText" Text="✓ Equipment Detected" FontSize="13" Foreground="White" FontWeight="Bold"/>
-                                        <TextBlock x:Name="DetectionDetailsText" Text="Helmet ✓ • Vest ✓" FontSize="11" Foreground="White" Margin="0,4,0,0"/>
+                            <!-- Control Buttons -->
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0"
+                                        Content="🎥 Start Camera"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Padding="0,15"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Cursor="Hand"
+                                        Margin="0,0,5,0"
+                                        Click="StartCamera_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Color="#2563eb" Offset="0"/>
+                                                        <GradientStop Color="#3b82f6" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <Button Grid.Column="1"
+                                        Content="📸 Upload Photo"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Padding="0,15"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Cursor="Hand"
+                                        Margin="5,0,5,0"
+                                        Click="UploadPhoto_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Color="#7c3aed" Offset="0"/>
+                                                        <GradientStop Color="#a78bfa" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <Button Grid.Column="2"
+                                        x:Name="CaptureButton"
+                                        Content="✨ Capture &amp; Analyze"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Padding="0,15"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Cursor="Hand"
+                                        Margin="5,0,0,0"
+                                        Click="CaptureAnalyze_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Color="#10b981" Offset="0"/>
+                                                        <GradientStop Color="#34d399" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Right Panel - Status and History -->
+                <StackPanel Grid.Column="1">
+                    <!-- Today's Summary -->
+                    <Border Background="White" CornerRadius="12" Padding="20" Margin="0,0,0,20">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
+                        </Border.Effect>
+                        <StackPanel>
+                            <TextBlock Text="Today's Summary" FontSize="16" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
+
+                            <Grid Margin="0,0,0,12">
+                                <TextBlock Text="Total Check-ins" FontSize="13" Foreground="#6B7280"/>
+                                <TextBlock Text="128" FontSize="18" FontWeight="Bold" Foreground="#111827" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <Border Background="#E5E7EB" Height="1" Margin="0,0,0,12"/>
+
+                            <Grid Margin="0,0,0,12">
+                                <TextBlock Text="Compliant" FontSize="13" Foreground="#10B981"/>
+                                <TextBlock Text="115" FontSize="18" FontWeight="Bold" Foreground="#10B981" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <Border Background="#E5E7EB" Height="1" Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <TextBlock Text="Non-Compliant" FontSize="13" Foreground="#EF4444"/>
+                                <TextBlock Text="13" FontSize="18" FontWeight="Bold" Foreground="#EF4444" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Recent Check-ins -->
+                    <Border Background="White" CornerRadius="12" Padding="20">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
+                        </Border.Effect>
+                        <StackPanel>
+                            <TextBlock Text="Recent Check-ins" FontSize="16" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
+
+                            <!-- Check-in Item 1 -->
+                            <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" Background="#D1FAE5" Width="35" Height="35" CornerRadius="17.5" Margin="0,0,10,0">
+                                        <TextBlock Text="✓" FontSize="16" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Mike Davis" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
+                                        <TextBlock Text="15 min ago" FontSize="11" Foreground="#9CA3AF"/>
                                     </StackPanel>
-                                </Border>
-                            </Grid>
-                        </Border>
+                                </Grid>
+                            </Border>
 
-                        <!-- Control Buttons -->
-                        <Grid Margin="0,20,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                            <!-- Check-in Item 2 -->
+                            <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                            <Button Grid.Column="0"
-                                    Content="🎥 Start Camera"
-                                    Foreground="White"
-                                    BorderThickness="0"
-                                    Padding="0,15"
-                                    FontSize="14"
-                                    FontWeight="SemiBold"
-                                    Cursor="Hand"
-                                    Margin="0,0,5,0"
-                                    Click="StartCamera_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <GradientStop Color="#2563eb" Offset="0"/>
-                                                    <GradientStop Color="#3b82f6" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
+                                    <Border Grid.Column="0" Background="#FEE2E2" Width="35" Height="35" CornerRadius="17.5" Margin="0,0,10,0">
+                                        <TextBlock Text="⚠" FontSize="16" Foreground="#EF4444" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
 
-                            <Button Grid.Column="1"
-                                    Content="📸 Upload Photo"
-                                    Foreground="White"
-                                    BorderThickness="0"
-                                    Padding="0,15"
-                                    FontSize="14"
-                                    FontWeight="SemiBold"
-                                    Cursor="Hand"
-                                    Margin="5,0,5,0"
-                                    Click="UploadPhoto_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <GradientStop Color="#7c3aed" Offset="0"/>
-                                                    <GradientStop Color="#a78bfa" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Sarah Johnson" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
+                                        <TextBlock Text="22 min ago • No vest" FontSize="11" Foreground="#EF4444"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
 
-                            <Button Grid.Column="2"
-                                    x:Name="CaptureButton"
-                                    Content="✨ Capture &amp; Analyze"
-                                    Foreground="White"
-                                    BorderThickness="0"
-                                    Padding="0,15"
-                                    FontSize="14"
-                                    FontWeight="SemiBold"
-                                    Cursor="Hand"
-                                    Margin="5,0,0,0"
-                                    Click="CaptureAnalyze_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="border" CornerRadius="12" Padding="{TemplateBinding Padding}">
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <GradientStop Color="#10b981" Offset="0"/>
-                                                    <GradientStop Color="#34d399" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-            </StackPanel>
+                            <!-- Check-in Item 3 -->
+                            <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-            <!-- Right Panel - Status and History -->
-            <StackPanel Grid.Column="1">
-                <!-- Today's Summary -->
-                <Border Background="White" CornerRadius="12" Padding="20" Margin="0,0,0,20">
-                    <Border.Effect>
-                        <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
-                    </Border.Effect>
-                    <StackPanel>
-                        <TextBlock Text="Today's Summary" FontSize="16" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
+                                    <Border Grid.Column="0" Background="#D1FAE5" Width="35" Height="35" CornerRadius="17.5" Margin="0,0,10,0">
+                                        <TextBlock Text="✓" FontSize="16" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
 
-                        <Grid Margin="0,0,0,12">
-                            <TextBlock Text="Total Check-ins" FontSize="13" Foreground="#6B7280"/>
-                            <TextBlock Text="128" FontSize="18" FontWeight="Bold" Foreground="#111827" HorizontalAlignment="Right"/>
-                        </Grid>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Emily Chen" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
+                                        <TextBlock Text="28 min ago" FontSize="11" Foreground="#9CA3AF"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
 
-                        <Border Background="#E5E7EB" Height="1" Margin="0,0,0,12"/>
+                            <!-- Check-in Item 4 -->
+                            <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                        <Grid Margin="0,0,0,12">
-                            <TextBlock Text="Compliant" FontSize="13" Foreground="#10B981"/>
-                            <TextBlock Text="115" FontSize="18" FontWeight="Bold" Foreground="#10B981" HorizontalAlignment="Right"/>
-                        </Grid>
+                                    <Border Grid.Column="0" Background="#D1FAE5" Width="35" Height="35" CornerRadius="17.5" Margin="0,0,10,0">
+                                        <TextBlock Text="✓" FontSize="16" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
 
-                        <Border Background="#E5E7EB" Height="1" Margin="0,0,0,12"/>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Robert Lee" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
+                                        <TextBlock Text="35 min ago" FontSize="11" Foreground="#9CA3AF"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
 
-                        <Grid>
-                            <TextBlock Text="Non-Compliant" FontSize="13" Foreground="#EF4444"/>
-                            <TextBlock Text="13" FontSize="18" FontWeight="Bold" Foreground="#EF4444" HorizontalAlignment="Right"/>
-                        </Grid>
-                    </StackPanel>
-                </Border>
+                            <!-- Check-in Item 5 -->
+                            <Border Padding="0,0,0,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                <!-- Recent Check-ins -->
-                <Border Background="White" CornerRadius="12" Padding="20">
-                    <Border.Effect>
-                        <DropShadowEffect Color="#000000" Opacity="0.1" BlurRadius="10" ShadowDepth="2"/>
-                    </Border.Effect>
-                    <StackPanel>
-                        <TextBlock Text="Recent Check-ins" FontSize="16" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,15"/>
+                                    <Border Grid.Column="0" Background="#FEE2E2" Width="35" Height="35" CornerRadius="17.5" Margin="0,0,10,0">
+                                        <TextBlock Text="⚠" FontSize="16" Foreground="#EF4444" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
 
-                        <!-- Check-in Item 1 -->
-                        <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Border Grid.Column="0" Background="#D1FAE5" Width="35" Height="35" CornerRadius="17.5" Margin="0,0,10,0">
-                                    <TextBlock Text="✓" FontSize="16" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="Mike Davis" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
-                                    <TextBlock Text="15 min ago" FontSize="11" Foreground="#9CA3AF"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <!-- Check-in Item 2 -->
-                        <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Border Grid.Column="0" Background="#FEE2E2" Width="35" Height="35" CornerRadius="17.5" Margin="0,0,10,0">
-                                    <TextBlock Text="⚠" FontSize="16" Foreground="#EF4444" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="Sarah Johnson" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
-                                    <TextBlock Text="22 min ago • No vest" FontSize="11" Foreground="#EF4444"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <!-- Check-in Item 3 -->
-                        <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Border Grid.Column="0" Background="#D1FAE5" Width="35" Height="35" CornerRadius="17.5" Margin="0,0,10,0">
-                                    <TextBlock Text="✓" FontSize="16" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="Emily Chen" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
-                                    <TextBlock Text="28 min ago" FontSize="11" Foreground="#9CA3AF"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <!-- Check-in Item 4 -->
-                        <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Border Grid.Column="0" Background="#D1FAE5" Width="35" Height="35" CornerRadius="17.5" Margin="0,0,10,0">
-                                    <TextBlock Text="✓" FontSize="16" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="Robert Lee" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
-                                    <TextBlock Text="35 min ago" FontSize="11" Foreground="#9CA3AF"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <!-- Check-in Item 5 -->
-                        <Border Padding="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Border Grid.Column="0" Background="#FEE2E2" Width="35" Height="35" CornerRadius="17.5" Margin="0,0,10,0">
-                                    <TextBlock Text="⚠" FontSize="16" Foreground="#EF4444" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="David Brown" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
-                                    <TextBlock Text="41 min ago • No helmet" FontSize="11" Foreground="#EF4444"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </Border>
-            </StackPanel>
-        </Grid>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="David Brown" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
+                                        <TextBlock Text="41 min ago • No helmet" FontSize="11" Foreground="#EF4444"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

@@ -91,23 +91,23 @@ namespace AbsenSeaFrontendFix.Pages
                 // Update Equipment Status
                 if (stats.CheckedInToday > 0)
                 {
-                    var helmetRate = 0.0;
-                    var vestRate = 0.0;
+                    var helmetRate = stats.HelmetRate;
+                    var vestRate = stats.VestRate;
                     var bothRate = stats.ComplianceRate;
 
                     EquipmentStatusText.Text =
-                        $"?? Safety Helmet: {helmetRate:F0}%\n" +
-                        $"?? Safety Vest: {vestRate:F0}%\n" +
-                        $"? Both Equipment: {bothRate:F0}%\n\n";
+                        $"🪖 Safety Helmet: {helmetRate:F0}%\n" +
+                        $"🦺 Safety Vest: {vestRate:F0}%\n" +
+                        $"✓ Both Equipment: {bothRate:F0}%\n\n";
 
                     if (stats.NonCompliant > 0)
                     {
                         EquipmentStatusText.Text +=
-                            $"?? {stats.NonCompliant} crew members need to complete their safety equipment.";
+                            $"⚠️ {stats.NonCompliant} crew members need to complete their safety equipment.";
                     }
                     else
                     {
-                        EquipmentStatusText.Text += "? All checked-in crew members are compliant!";
+                        EquipmentStatusText.Text += "✓ All checked-in crew members are compliant!";
                     }
                 }
                 else

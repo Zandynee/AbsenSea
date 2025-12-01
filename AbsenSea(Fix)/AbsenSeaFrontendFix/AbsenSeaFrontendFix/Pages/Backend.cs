@@ -198,6 +198,8 @@ namespace AbsenSeaFrontendFix.Pages
             var checkedIn = todayChecks.Count;
             var compliant = todayChecks.Count(c => c.HELMET == true && c.VEST == true);
             var nonCompliant = todayChecks.Count(c => !(c.HELMET == true && c.VEST == true));
+            var withHelmet = todayChecks.Count(c => c.HELMET == true);
+            var withVest = todayChecks.Count(c => c.VEST == true);
 
             return new DashboardStats
             {
@@ -206,7 +208,9 @@ namespace AbsenSeaFrontendFix.Pages
                 Compliant = compliant,
                 NonCompliant = nonCompliant,
                 AttendanceRate = totalCrew > 0 ? (checkedIn * 100.0 / totalCrew) : 0,
-                ComplianceRate = checkedIn > 0 ? (compliant * 100.0 / checkedIn) : 0
+                ComplianceRate = checkedIn > 0 ? (compliant * 100.0 / checkedIn) : 0,
+                HelmetRate = checkedIn > 0 ? (withHelmet * 100.0 / checkedIn) : 0,
+                VestRate = checkedIn > 0 ? (withVest * 100.0 / checkedIn) : 0
             };
         }
 
@@ -265,5 +269,7 @@ namespace AbsenSeaFrontendFix.Pages
         public int NonCompliant { get; set; }
         public double AttendanceRate { get; set; }
         public double ComplianceRate { get; set; }
+        public double HelmetRate { get; set; }
+        public double VestRate { get; set; }
     }
 }

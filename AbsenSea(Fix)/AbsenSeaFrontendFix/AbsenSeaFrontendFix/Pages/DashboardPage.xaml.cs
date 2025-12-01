@@ -38,7 +38,7 @@ namespace AbsenSeaFrontendFix.Pages
                 {
                     var shipName = Application.Current.Properties["CurrentShipName"]?.ToString();
                     var shipId = Application.Current.Properties["CurrentShipId"]?.ToString();
-                    ShipInfoText.Text = $"Ship: {shipName} • ID: {shipId}";
+                    ShipInfoText.Text = $"Ship: {shipName} ï¿½ ID: {shipId}";
                 }
 
                 // Get dashboard statistics
@@ -52,6 +52,9 @@ namespace AbsenSeaFrontendFix.Pages
 
                 // Load recent activity
                 await LoadRecentActivity();
+
+                // Load attendance chart
+                await LoadAttendanceChart();
 
                 Debug.WriteLine($"Dashboard loaded successfully");
             }
@@ -126,14 +129,19 @@ namespace AbsenSeaFrontendFix.Pages
             {
                 var today = DateTime.Today;
 
-                // Get recent checks (last 10)
+                // Get recent checks
                 var checksResult = await _backend.SupabaseClient
                     .From<CrewCheck>()
                     .Select("*")
-                    .Where(c => c.CHECK_DATE >= today)
                     .Order("CAPTURE_AT", Supabase.Postgrest.Constants.Ordering.Descending)
-                    .Limit(10)
+                    .Limit(20)
                     .Get();
+                
+                // Filter to today's checks
+                var recentChecks = checksResult.Models
+                    .Where(c => c.CHECK_DATE.HasValue && c.CHECK_DATE.Value.Date == today)
+                    .Take(10)
+                    .ToList();
 
                 // Get crew members for lookup
                 var crewResult = await _backend.SupabaseClient
@@ -142,8 +150,6 @@ namespace AbsenSeaFrontendFix.Pages
                     .Get();
 
                 var crewLookup = crewResult.Models.ToDictionary(c => c.CREW_ID, c => c);
-
-                var recentChecks = checksResult.Models;
 
                 // Clear and rebuild activity panel
                 RecentActivityPanel.Children.Clear();
@@ -174,7 +180,11 @@ namespace AbsenSeaFrontendFix.Pages
                     if (crewMember == null) continue;
 
                     var isCompliant = check.HELMET == true && check.VEST == true;
-                    var timeSinceCheck = DateTime.Now - check.CAPTURE_AT;
+                    // Convert UTC time from database to local time
+                    var localCaptureTime = check.CAPTURE_AT.Kind == DateTimeKind.Utc 
+                        ? check.CAPTURE_AT.ToLocalTime() 
+                        : check.CAPTURE_AT;
+                    var timeSinceCheck = DateTime.Now - localCaptureTime;
                     var timeText = FormatTimeAgo(timeSinceCheck);
 
                     // Create activity item
@@ -248,7 +258,7 @@ namespace AbsenSeaFrontendFix.Pages
 
             if (isCompliant)
             {
-                statusText.Text = "Full compliance • Helmet & Vest detected";
+                statusText.Text = "Full compliance ï¿½ Helmet & Vest detected";
                 statusText.Foreground = new SolidColorBrush(Color.FromRgb(16, 185, 129));
             }
             else
@@ -312,6 +322,174 @@ namespace AbsenSeaFrontendFix.Pages
 
             var loginPage = new LoginPage();
             NavigationService?.Navigate(loginPage);
+        }
+
+        private async System.Threading.Tasks.Task LoadAttendanceChart()
+        {
+            try
+            {
+                // Clear canvas
+                AttendanceChartCanvas.Children.Clear();
+
+                // Get attendance data for last 7 days
+                var attendanceData = new List<(string Day, int Count)>();
+                
+                for (int i = 6; i >= 0; i--)
+                {
+                    var date = DateTime.Today.AddDays(-i);
+                    var checks = await _backend.SupabaseClient
+                        .From<CrewCheck>()
+                        .Select("*")
+                        .Order("CAPTURE_AT", Supabase.Postgrest.Constants.Ordering.Descending)
+                        .Limit(200)
+                        .Get();
+                    
+                    // Filter by date locally
+                    var dayCount = checks.Models
+                        .Count(c => c.CHECK_DATE.HasValue && c.CHECK_DATE.Value.Date == date);
+                    
+                    attendanceData.Add((date.ToString("ddd"), dayCount));
+                }
+
+                // Draw the chart
+                DrawBarChart(attendanceData);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading attendance chart: {ex.Message}");
+                
+                // Show error message on canvas
+                var errorText = new TextBlock
+                {
+                    Text = "Unable to load chart data",
+                    FontSize = 14,
+                    Foreground = new SolidColorBrush(Color.FromRgb(107, 114, 128)),
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                Canvas.SetLeft(errorText, AttendanceChartCanvas.ActualWidth / 2 - 75);
+                Canvas.SetTop(errorText, AttendanceChartCanvas.ActualHeight / 2);
+                AttendanceChartCanvas.Children.Add(errorText);
+            }
+        }
+
+        private void DrawBarChart(List<(string Day, int Count)> data)
+        {
+            if (data.Count == 0) return;
+
+            var canvasWidth = AttendanceChartCanvas.ActualWidth;
+            var canvasHeight = AttendanceChartCanvas.ActualHeight;
+
+            // If canvas not rendered yet, use default size
+            if (canvasWidth == 0) canvasWidth = 600;
+            if (canvasHeight == 0) canvasHeight = 200;
+
+            var maxValue = data.Max(d => d.Count);
+            if (maxValue == 0) maxValue = 1; // Avoid division by zero
+
+            var barWidth = (canvasWidth - 100) / data.Count;
+            var chartHeight = canvasHeight - 60;
+
+            // Draw grid lines
+            for (int i = 0; i <= 5; i++)
+            {
+                var y = chartHeight - (i * chartHeight / 5);
+                
+                // Horizontal grid line
+                var gridLine = new System.Windows.Shapes.Line
+                {
+                    X1 = 50,
+                    Y1 = y,
+                    X2 = canvasWidth - 20,
+                    Y2 = y,
+                    Stroke = new SolidColorBrush(Color.FromRgb(229, 231, 235)),
+                    StrokeThickness = 1
+                };
+                AttendanceChartCanvas.Children.Add(gridLine);
+
+                // Y-axis label
+                var label = new TextBlock
+                {
+                    Text = ((maxValue * i / 5)).ToString(),
+                    FontSize = 10,
+                    Foreground = new SolidColorBrush(Color.FromRgb(156, 163, 175))
+                };
+                Canvas.SetLeft(label, 20);
+                Canvas.SetTop(label, y - 8);
+                AttendanceChartCanvas.Children.Add(label);
+            }
+
+            // Draw bars
+            for (int i = 0; i < data.Count; i++)
+            {
+                var (day, count) = data[i];
+                var barHeight = (count * chartHeight) / maxValue;
+                var x = 60 + (i * barWidth);
+                var y = chartHeight - barHeight;
+
+                // Bar background
+                var barBg = new System.Windows.Shapes.Rectangle
+                {
+                    Width = barWidth - 15,
+                    Height = chartHeight,
+                    Fill = new SolidColorBrush(Color.FromRgb(243, 244, 246)),
+                    RadiusX = 6,
+                    RadiusY = 6
+                };
+                Canvas.SetLeft(barBg, x);
+                Canvas.SetTop(barBg, 0);
+                AttendanceChartCanvas.Children.Add(barBg);
+
+                // Bar
+                var bar = new System.Windows.Shapes.Rectangle
+                {
+                    Width = barWidth - 15,
+                    Height = barHeight > 0 ? barHeight : 0,
+                    RadiusX = 6,
+                    RadiusY = 6
+                };
+                
+                // Gradient fill
+                var gradient = new LinearGradientBrush
+                {
+                    StartPoint = new Point(0, 0),
+                    EndPoint = new Point(0, 1)
+                };
+                gradient.GradientStops.Add(new GradientStop(Color.FromRgb(37, 99, 235), 0));
+                gradient.GradientStops.Add(new GradientStop(Color.FromRgb(59, 130, 246), 1));
+                bar.Fill = gradient;
+
+                Canvas.SetLeft(bar, x);
+                Canvas.SetTop(bar, y);
+                AttendanceChartCanvas.Children.Add(bar);
+
+                // Value label on top of bar
+                if (count > 0)
+                {
+                    var valueLabel = new TextBlock
+                    {
+                        Text = count.ToString(),
+                        FontSize = 12,
+                        FontWeight = FontWeights.Bold,
+                        Foreground = new SolidColorBrush(Color.FromRgb(37, 99, 235))
+                    };
+                    Canvas.SetLeft(valueLabel, x + (barWidth - 15) / 2 - 8);
+                    Canvas.SetTop(valueLabel, y - 20);
+                    AttendanceChartCanvas.Children.Add(valueLabel);
+                }
+
+                // Day label
+                var dayLabel = new TextBlock
+                {
+                    Text = day,
+                    FontSize = 11,
+                    FontWeight = FontWeights.SemiBold,
+                    Foreground = new SolidColorBrush(Color.FromRgb(107, 114, 128))
+                };
+                Canvas.SetLeft(dayLabel, x + (barWidth - 15) / 2 - 15);
+                Canvas.SetTop(dayLabel, chartHeight + 10);
+                AttendanceChartCanvas.Children.Add(dayLabel);
+            }
         }
     }
 }

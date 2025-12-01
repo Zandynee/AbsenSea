@@ -29,12 +29,31 @@ namespace AbsenSeaFrontendFix.Pages
                     _backend = await Backend.CreateAsync();
                     _isInitialized = true;
                     Debug.WriteLine("Backend initialized successfully!");
+
+                    // Test database connection
+                    bool connectionTest = await _backend.TestConnection();
+                    if (connectionTest)
+                    {
+                        Debug.WriteLine("✓ Database connection test passed!");
+                        
+                        // Count records to verify access
+                        var crewCount = await _backend.GetAllCrewMembers();
+                        Debug.WriteLine($"✓ Found {crewCount.Count} crew members in database");
+                    }
+                    else
+                    {
+                        Debug.WriteLine("✗ Database connection test failed");
+                        MessageBox.Show("Database connected but may have access issues. Check RLS policies.", 
+                            "Connection Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error during initialization: {ex.Message}");
-                MessageBox.Show($"Failed to connect to database: {ex.Message}", "Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+                MessageBox.Show($"Failed to connect to database:\n\n{ex.Message}\n\nCheck your .env file and Supabase credentials.", 
+                    "Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

@@ -10,6 +10,11 @@
 
   <ItemGroup>
     <None Remove="Resources\best.onnx" />
+    <None Remove="Assets\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\logo.png" />
   </ItemGroup>
 
   <ItemGroup>

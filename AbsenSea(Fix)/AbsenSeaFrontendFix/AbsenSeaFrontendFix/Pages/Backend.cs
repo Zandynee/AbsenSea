@@ -16,8 +16,20 @@ namespace AbsenSeaFrontendFix.Pages
 
         public static async Task<Backend> CreateAsync()
         {
-            DotNetEnv.Env.Load(); // Load once, here
-            DotNetEnv.Env.TraversePath().Load();
+            // Get the base directory of the application
+            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var envPath = System.IO.Path.Combine(baseDirectory, ".env");
+            
+            // Load .env file from the executable's directory
+            if (System.IO.File.Exists(envPath))
+            {
+                DotNetEnv.Env.Load(envPath);
+            }
+            else
+            {
+                // Fallback: try to load from current directory
+                DotNetEnv.Env.TraversePath().Load();
+            }
 
             var backend = new Backend();
             var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
@@ -170,14 +182,18 @@ namespace AbsenSeaFrontendFix.Pages
                 .Select("*")
                 .Get();
 
-            // Get today's checks
+            // Get recent checks and filter locally
             var checksResult = await SupabaseClient
                 .From<CrewCheck>()
                 .Select("*")
-                .Where(c => c.CHECK_DATE >= today)
+                .Order("CAPTURE_AT", Supabase.Postgrest.Constants.Ordering.Descending)
+                .Limit(100)
                 .Get();
+            
+            var todayChecks = checksResult.Models
+                .Where(c => c.CHECK_DATE.HasValue && c.CHECK_DATE.Value.Date == today)
+                .ToList();
 
-            var todayChecks = checksResult.Models;
             var totalCrew = crewResult.Models.Count;
             var checkedIn = todayChecks.Count;
             var compliant = todayChecks.Count(c => c.HELMET == true && c.VEST == true);

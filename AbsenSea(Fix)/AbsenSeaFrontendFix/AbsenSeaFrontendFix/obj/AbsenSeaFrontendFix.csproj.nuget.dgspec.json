@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj": {}
+    "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj": {}
   },
   "projects": {
-    "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj": {
+    "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj",
+        "projectUniqueName": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj",
         "projectName": "AbsenSeaFrontendFix",
-        "projectPath": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\Entertainment\\Coding\\junopr\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\obj\\",
+        "projectPath": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix.csproj",
+        "packagesPath": "C:\\Users\\saida\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\saida\\AbsenSea\\AbsenSea(Fix)\\AbsenSeaFrontendFix\\AbsenSeaFrontendFix\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\saida\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -91,7 +91,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

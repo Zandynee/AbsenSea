@@ -215,11 +215,11 @@
                         <ColumnDefinition Width="1*" MinWidth="300"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Attendance Trend (keeping static for now) -->
+                    <!-- Attendance Trend -->
                     <Border Grid.Column="0" Style="{StaticResource StatCard}">
                         <StackPanel>
                             <TextBlock Text="Attendance Trend (Last 7 Days)" FontSize="18" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,20"/>
-                            <TextBlock Text="📊 Chart visualization coming soon..." FontSize="14" Foreground="#6B7280" TextAlignment="Center" Margin="0,40"/>
+                            <Canvas x:Name="AttendanceChartCanvas" Height="200" Background="Transparent" Margin="0,10,0,0"/>
                         </StackPanel>
                     </Border>
 

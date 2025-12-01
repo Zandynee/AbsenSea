@@ -56,6 +56,10 @@ namespace AbsenSeaFrontendFix.Pages
                 // Setup camera display and load crew members
                 SetupCameraDisplay();
                 await LoadCrewMembers();
+                
+                // Load dashboard data
+                await LoadTodaysSummary();
+                await LoadRecentCheckIns();
             }
             catch (Exception ex)
             {
@@ -629,6 +633,10 @@ namespace AbsenSeaFrontendFix.Pages
 
                 // Reset for next crew member
                 ResetForm();
+                
+                // Refresh the summary and recent check-ins
+                await LoadTodaysSummary();
+                await LoadRecentCheckIns();
             }
             catch (Exception ex)
             {
@@ -710,11 +718,15 @@ namespace AbsenSeaFrontendFix.Pages
         {
             try
             {
+                var now = DateTime.Now;
+                // Store CHECK_DATE at noon to avoid timezone conversion issues
+                var checkDate = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
+                
                 var newCheck = new CrewCheck
                 {
                     CREW_ID = crewId,
-                    CAPTURE_AT = DateTime.UtcNow,
-                    CHECK_DATE = DateTime.Today,
+                    CAPTURE_AT = now,
+                    CHECK_DATE = checkDate,
                     PRESENT = present,
                     HELMET = hasHelmet,
                     VEST = hasVest
@@ -736,6 +748,266 @@ namespace AbsenSeaFrontendFix.Pages
                 System.Diagnostics.Debug.WriteLine($"Error saving attendance: {ex.Message}");
                 throw; // Re-throw to be handled by caller
             }
+        }
+
+        // Load today's summary from database
+        private async Task LoadTodaysSummary()
+        {
+            try
+            {
+                var today = DateTime.Today;
+
+                // Get all recent checks and filter by date locally to handle timezone issues
+                var checksResult = await backend.SupabaseClient
+                    .From<CrewCheck>()
+                    .Select("*")
+                    .Order("CAPTURE_AT", Supabase.Postgrest.Constants.Ordering.Descending)
+                    .Limit(100)
+                    .Get();
+                
+                // Filter to today's checks (comparing date part only)
+                var todayChecks = checksResult.Models
+                    .Where(c => c.CHECK_DATE.HasValue && c.CHECK_DATE.Value.Date == today)
+                    .ToList();
+
+                var totalCheckins = todayChecks.Count;
+                var compliant = todayChecks.Count(c => c.HELMET == true && c.VEST == true);
+                var nonCompliant = todayChecks.Count(c => !(c.HELMET == true && c.VEST == true));
+
+                // Find TextBlocks in the XAML by their names
+                // We need to add x:Name to the summary TextBlocks in XAML
+                // For now, we'll traverse the visual tree to find them
+                UpdateSummaryUI(totalCheckins, compliant, nonCompliant);
+
+                System.Diagnostics.Debug.WriteLine($"Today's summary loaded: {totalCheckins} total, {compliant} compliant, {nonCompliant} non-compliant");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading today's summary: {ex.Message}");
+            }
+        }
+
+        private void UpdateSummaryUI(int total, int compliant, int nonCompliant)
+        {
+            // Find the summary panel in the visual tree
+            var summaryBorder = FindVisualChild<Border>(this, b => 
+            {
+                var stack = b.Child as StackPanel;
+                if (stack != null && stack.Children.Count > 0)
+                {
+                    var first = stack.Children[0] as TextBlock;
+                    return first?.Text == "Today's Summary";
+                }
+                return false;
+            });
+
+            if (summaryBorder != null && summaryBorder.Child is StackPanel summaryPanel)
+            {
+                // Update the values in the grids
+                var grids = summaryPanel.Children.OfType<Grid>().ToList();
+                if (grids.Count >= 3)
+                {
+                    // Total check-ins (first grid)
+                    var totalText = grids[0].Children.OfType<TextBlock>().FirstOrDefault(tb => tb.HorizontalAlignment == HorizontalAlignment.Right);
+                    if (totalText != null) totalText.Text = total.ToString();
+
+                    // Compliant (second grid after separator)
+                    var compliantText = grids[1].Children.OfType<TextBlock>().FirstOrDefault(tb => tb.HorizontalAlignment == HorizontalAlignment.Right);
+                    if (compliantText != null) compliantText.Text = compliant.ToString();
+
+                    // Non-compliant (third grid)
+                    var nonCompliantText = grids[2].Children.OfType<TextBlock>().FirstOrDefault(tb => tb.HorizontalAlignment == HorizontalAlignment.Right);
+                    if (nonCompliantText != null) nonCompliantText.Text = nonCompliant.ToString();
+                }
+            }
+        }
+
+        // Load recent check-ins from database
+        private async Task LoadRecentCheckIns()
+        {
+            try
+            {
+                var today = DateTime.Today;
+
+                // Get recent checks
+                var checksResult = await backend.SupabaseClient
+                    .From<CrewCheck>()
+                    .Select("*")
+                    .Order("CAPTURE_AT", Supabase.Postgrest.Constants.Ordering.Descending)
+                    .Limit(20)
+                    .Get();
+                
+                // Filter to today's checks (comparing date part only)
+                var recentChecks = checksResult.Models
+                    .Where(c => c.CHECK_DATE.HasValue && c.CHECK_DATE.Value.Date == today)
+                    .Take(5)
+                    .ToList();
+
+                // Get crew members for lookup
+                var crewResult = await backend.SupabaseClient
+                    .From<CrewMember>()
+                    .Select("*")
+                    .Get();
+
+                var crewLookup = crewResult.Models.ToDictionary(c => c.CREW_ID, c => c);
+
+                // Find the recent check-ins panel
+                var recentBorder = FindVisualChild<Border>(this, b =>
+                {
+                    var stack = b.Child as StackPanel;
+                    if (stack != null && stack.Children.Count > 0)
+                    {
+                        var first = stack.Children[0] as TextBlock;
+                        return first?.Text == "Recent Check-ins";
+                    }
+                    return false;
+                });
+
+                if (recentBorder != null && recentBorder.Child is StackPanel recentPanel && recentPanel.Children.Count > 1)
+                {
+                    // Remove old check-in items (keep only the title)
+                    while (recentPanel.Children.Count > 1)
+                    {
+                        recentPanel.Children.RemoveAt(1);
+                    }
+
+                    // Add new check-in items
+                    foreach (var check in recentChecks)
+                    {
+                        if (check.CREW_ID == null) continue;
+
+                        CrewMember? crewMember = null;
+                        if (crewLookup.ContainsKey(check.CREW_ID.Value))
+                        {
+                            crewMember = crewLookup[check.CREW_ID.Value];
+                        }
+
+                        if (crewMember == null) continue;
+
+                        var isCompliant = check.HELMET == true && check.VEST == true;
+                        // Convert UTC time from database to local time
+                        var localCaptureTime = check.CAPTURE_AT.Kind == DateTimeKind.Utc 
+                            ? check.CAPTURE_AT.ToLocalTime() 
+                            : check.CAPTURE_AT;
+                        var timeSinceCheck = DateTime.Now - localCaptureTime;
+                        var timeText = FormatTimeAgo(timeSinceCheck);
+
+                        var missingItems = new List<string>();
+                        if (check.HELMET != true) missingItems.Add("helmet");
+                        if (check.VEST != true) missingItems.Add("vest");
+                        var statusText = missingItems.Count > 0 ? $" • No {string.Join(", ", missingItems)}" : "";
+
+                        var checkInItem = CreateCheckInItem(crewMember.CREW_NAME, isCompliant, timeText, statusText);
+                        recentPanel.Children.Add(checkInItem);
+                    }
+
+                    System.Diagnostics.Debug.WriteLine($"Loaded {recentChecks.Count} recent check-ins");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading recent check-ins: {ex.Message}");
+            }
+        }
+
+        private Border CreateCheckInItem(string crewName, bool isCompliant, string timeAgo, string statusText)
+        {
+            var borderThickness = new Thickness(0, 0, 0, 1);
+            var padding = new Thickness(0, 0, 0, 12);
+            var margin = new Thickness(0, 0, 0, 12);
+
+            var itemBorder = new Border
+            {
+                BorderBrush = new SolidColorBrush(Color.FromRgb(229, 231, 235)),
+                BorderThickness = borderThickness,
+                Padding = padding,
+                Margin = margin
+            };
+
+            var grid = new Grid();
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            // Icon
+            var iconBorder = new Border
+            {
+                Background = new SolidColorBrush(isCompliant ? Color.FromRgb(209, 250, 229) : Color.FromRgb(254, 226, 226)),
+                Width = 35,
+                Height = 35,
+                CornerRadius = new CornerRadius(17.5),
+                Margin = new Thickness(0, 0, 10, 0)
+            };
+            var iconText = new TextBlock
+            {
+                Text = isCompliant ? "✓" : "⚠",
+                FontSize = 16,
+                Foreground = new SolidColorBrush(isCompliant ? Color.FromRgb(16, 185, 129) : Color.FromRgb(239, 68, 68)),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            iconBorder.Child = iconText;
+            Grid.SetColumn(iconBorder, 0);
+
+            // Details
+            var detailsPanel = new StackPanel();
+            var nameText = new TextBlock
+            {
+                Text = crewName,
+                FontSize = 13,
+                FontWeight = FontWeights.SemiBold,
+                Foreground = new SolidColorBrush(Color.FromRgb(17, 24, 39))
+            };
+            var timeStatusText = new TextBlock
+            {
+                Text = timeAgo + statusText,
+                FontSize = 11,
+                Foreground = new SolidColorBrush(isCompliant ? Color.FromRgb(156, 163, 175) : Color.FromRgb(239, 68, 68))
+            };
+            detailsPanel.Children.Add(nameText);
+            detailsPanel.Children.Add(timeStatusText);
+            Grid.SetColumn(detailsPanel, 1);
+
+            grid.Children.Add(iconBorder);
+            grid.Children.Add(detailsPanel);
+            itemBorder.Child = grid;
+
+            return itemBorder;
+        }
+
+        private string FormatTimeAgo(TimeSpan timeSpan)
+        {
+            if (timeSpan.TotalMinutes < 1)
+                return "just now";
+            if (timeSpan.TotalMinutes < 60)
+                return $"{(int)timeSpan.TotalMinutes} min ago";
+            if (timeSpan.TotalHours < 24)
+                return $"{(int)timeSpan.TotalHours} hour{((int)timeSpan.TotalHours > 1 ? "s" : "")} ago";
+            return $"{(int)timeSpan.TotalDays} day{((int)timeSpan.TotalDays > 1 ? "s" : "")} ago";
+        }
+
+        // Helper method to find visual children
+        private T? FindVisualChild<T>(DependencyObject parent, Func<T, bool> predicate) where T : DependencyObject
+        {
+            if (parent == null) return null;
+
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                
+                if (child is T typedChild && predicate(typedChild))
+                {
+                    return typedChild;
+                }
+
+                var foundChild = FindVisualChild(child, predicate);
+                if (foundChild != null)
+                {
+                    return foundChild;
+                }
+            }
+
+            return null;
         }
     }
 }

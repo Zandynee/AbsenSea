@@ -119,18 +119,22 @@
                     <!-- Date Range -->
                     <StackPanel Grid.Column="0" Margin="0,0,15,0">
                         <TextBlock Text="Date Range" FontSize="13" FontWeight="SemiBold" Foreground="#374151" Margin="0,0,0,8"/>
-                        <DatePicker BorderBrush="#D1D5DB"
+                        <DatePicker x:Name="DateFilterPicker"
+                                    BorderBrush="#D1D5DB"
                                     BorderThickness="1"
-                                    Padding="10,8"/>
+                                    Padding="10,8"
+                                    SelectedDateChanged="DateFilterPicker_SelectedDateChanged"/>
                     </StackPanel>
 
                     <!-- Status Filter -->
                     <StackPanel Grid.Column="1" Margin="0,0,15,0">
                         <TextBlock Text="Compliance Status" FontSize="13" FontWeight="SemiBold" Foreground="#374151" Margin="0,0,0,8"/>
-                        <ComboBox SelectedIndex="0" 
+                        <ComboBox x:Name="StatusFilterComboBox"
+                                  SelectedIndex="0" 
                                   BorderBrush="#D1D5DB"
                                   BorderThickness="1"
-                                  Padding="10,8">
+                                  Padding="10,8"
+                                  SelectionChanged="StatusFilterComboBox_SelectionChanged">
                             <ComboBoxItem Content="All Status"/>
                             <ComboBoxItem Content="Compliant"/>
                             <ComboBoxItem Content="Non-Compliant"/>
@@ -142,10 +146,12 @@
                     <!-- Department Filter -->
                     <StackPanel Grid.Column="2" Margin="0,0,15,0">
                         <TextBlock Text="Department" FontSize="13" FontWeight="SemiBold" Foreground="#374151" Margin="0,0,0,8"/>
-                        <ComboBox SelectedIndex="0"
+                        <ComboBox x:Name="DepartmentFilterComboBox"
+                                  SelectedIndex="0"
                                   BorderBrush="#D1D5DB"
                                   BorderThickness="1"
-                                  Padding="10,8">
+                                  Padding="10,8"
+                                  SelectionChanged="DepartmentFilterComboBox_SelectionChanged">
                             <ComboBoxItem Content="All Departments"/>
                             <ComboBoxItem Content="Engineering"/>
                             <ComboBoxItem Content="Deck"/>
@@ -193,7 +199,7 @@
                     <!-- Table Header -->
                     <Grid Grid.Row="0" Margin="0,0,0,15">
                         <TextBlock Text="Daily Attendance Records" FontSize="18" FontWeight="Bold" Foreground="#111827"/>
-                        <TextBlock Text="Today • November 30, 2025" FontSize="13" Foreground="#6B7280" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="ReportDateText" Text="Today" FontSize="13" Foreground="#6B7280" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
 
                     <!-- Data Grid -->
